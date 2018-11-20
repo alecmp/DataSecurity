@@ -4,8 +4,11 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 
+import com.scottyab.aescrypt.AESCrypt;
+
 import org.jetbrains.annotations.Contract;
 
+import java.security.GeneralSecurityException;
 import java.util.Random;
 
 import alessandro.stegopoliba.utils.Constants;
@@ -143,6 +146,23 @@ public class Embedding {
     //End of secret message flag. (0,2,COLOR_RGB_END)
     stegoImage.setPixel(endX, endY, Constants.COLOR_RGB_END);
 
+    /////////////
+   /* String sStegoImageInBin = HelperMethods.bitmapToBinaryStream(stegoImage);
+      String encryptedStego = null;
+    try {
+        encryptedStego = AESCrypt.encrypt("alessandrocampanello", sStegoImageInBin);
+      }catch (GeneralSecurityException e){
+          //handle error - could be due to incorrect password or tampered encryptedMsg
+      }
+
+      ///converto stringa in stringa binaria
+      String sEncryptedStegoInBin = HelperMethods.stringToBinaryStream(encryptedStego);
+      ///converto stringa binaria in bitmap
+
+      byte[] bytes = sEncryptedStegoInBin.getBytes();
+      stegoImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);*/
+    /////////////
+
     return stegoImage;
   }
 
@@ -171,6 +191,15 @@ public class Embedding {
   @Nullable
   public static Bitmap embedSecretText(String secretText, Bitmap coverImage) {
 
+    try {
+      secretText = AESCrypt.encrypt("alessandrocampanello", secretText);
+    }catch (GeneralSecurityException e){
+      //handle error - could be due to incorrect password or tampered encryptedMsg
+    }
+
+
+
+
     Bitmap stegoImage = coverImage.copy(Bitmap.Config.ARGB_8888, true);
     stegoImage.setPremultiplied(false);
 
@@ -187,7 +216,7 @@ public class Embedding {
       return null;
     }
 
-    //Generate and place random 24 bit array of 0-1 in (0,0) pixel
+
     int key[] = generateKey();
     int temp_number;
 
@@ -221,7 +250,7 @@ public class Embedding {
       blue_sum += temp_number;
     }
 
-    //Update (0,1) pixel with RGB_888 as for key values
+
     stegoImage.setPixel(0, 0, Color.rgb(red_sum, green_sum, blue_sum));
     StandardMethods.showLog("EMB", "Key1: " + red_sum + " " + green_sum + " " + blue_sum);
 
@@ -229,7 +258,6 @@ public class Embedding {
     stegoImage.setPixel(0, 1, Constants.COLOR_RGB_TEXT);
 
     int endX = 0, endY = 2;
-
     outerloop:
     for (int x = 0; x < width; x++) {
       for (int y = 2; y < height; y++) {
@@ -243,7 +271,6 @@ public class Embedding {
               break;
             }
 
-            //Action for LSB
             if ((key[keyPos] ^ LSB2(colors[c])) == 1) {
               action = action(colors[c], sTextInBin.charAt(embMesPos));
               colors[c] += action;
