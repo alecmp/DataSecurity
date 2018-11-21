@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "93127187425",
+    "firebase_url": "https://datasecurity-26600.firebaseio.com",
+    "project_id": "datasecurity-26600",
+    "storage_bucket": "datasecurity-26600.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93127187425:android:313573b32b9d4566",
+        "android_client_info": {
+          "package_name": "alessandro.datasecurity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93127187425-s82koei4k7it3fud1r56j1i7tcnh90bv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsjL-RZPI_Ql3D2jZ6yOwecA7S37xgI88"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

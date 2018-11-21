@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context="alessandro.stegopoliba.activities.decrypt.DecryptActivity">
+    tools:context="alessandro.datasecurity.activities.decrypt.DecryptActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
