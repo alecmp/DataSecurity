@@ -13,9 +13,11 @@ import android.widget.TextView;
 import com.edwardvanraak.materialbarcodescanner.MaterialBarcodeScanner;
 import com.edwardvanraak.materialbarcodescanner.MaterialBarcodeScannerBuilder;
 import com.google.android.gms.vision.barcode.Barcode;
+import com.scottyab.aescrypt.AESCrypt;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.security.GeneralSecurityException;
 
 import alessandro.stegopoliba.R;
 import alessandro.stegopoliba.utils.Constants;
@@ -89,18 +91,6 @@ public class DecryptResultActivity extends AppCompatActivity {
 
     }
 
-    /*public void openCamera() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File file = new File(android.os.Environment
-                .getExternalStorageDirectory(), "temp.png");
-
-        Uri imageUri = FileProvider.getUriForFile(this, "alexparunov", file);
-
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        startActivityForResult(intent, Constants.REQUEST_CAMERA);
-    }*/
-
-
     private void startScan() {
         /**
          * Build a new MaterialBarcodeScanner
@@ -115,11 +105,25 @@ public class DecryptResultActivity extends AppCompatActivity {
                     @Override
                     public void onResult(Barcode barcode) {
                         //   barcodeResult = barcode;
-                        tvSecretMessage.setText(barcode.rawValue);
+                        //tvSecretMessage.setText(barcode.rawValue);
+                        tvSecretMessage.setText(decryptAES(barcode.rawValue));
+
                     }
                 })
                 .build();
         materialBarcodeScanner.startScan();
+    }
+
+
+    private String decryptAES(String password) {
+        String messageAfterDecrypt = null;
+        try {
+            messageAfterDecrypt = AESCrypt.decrypt(password, secretMessage);
+        } catch (GeneralSecurityException e) {
+            //handle error - could be due to incorrect password or tampered encryptedMsg
+        }
+
+        return messageAfterDecrypt;
     }
 
 

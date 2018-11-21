@@ -192,7 +192,7 @@ public class Embedding {
   public static Bitmap embedSecretText(String secretText, Bitmap coverImage) {
 
     try {
-      secretText = AESCrypt.encrypt("alessandrocampanello", secretText);
+      secretText = AESCrypt.encrypt("CMPLSN94M14A662F", secretText);
     }catch (GeneralSecurityException e){
       //handle error - could be due to incorrect password or tampered encryptedMsg
     }
