@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:orientation="vertical"
+app:cardCornerRadius="0dp"
+android:layout_margin="7dp"
+android:elevation="90dp">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="#ffffff">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vsender"
+        android:text="POST TITLE"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:paddingStart="5dp"
+        android:paddingLeft="5dp"
+        android:paddingEnd="5dp"
+        android:paddingRight="5dp"
+        android:textSize="20sp"
+        android:textColor="#000000"/>
+
+    <TextView
+    android:id="@+id/vtimeStamp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/vsender"
+    android:layout_alignStart="@+id/vsender"
+    android:layout_below="@+id/vsender"
+    android:paddingEnd="5dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingStart="5dp"
+    android:text="DESCRIPTION"
+    android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/vmessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vtimeStamp"
+        android:paddingEnd="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingStart="5dp"
+        android:text="DESCRIPTION"
+        android:textColor="#000000" />
+
+
+
+
+</RelativeLayout>
+</android.support.v7.widget.CardView>
