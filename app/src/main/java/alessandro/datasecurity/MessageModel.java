@@ -2,41 +2,53 @@ package alessandro.datasecurity;
 
 public class MessageModel {
 
-    private String sender;
-    private String timeStamp;
+    private int id;
+    private String from;
+    private String subject;
     private String message;
+    private String timeStamp;
+    private String picture;
+    private boolean isImportant;
+    private boolean isRead;
+    private int color = -1;
 
 
     public MessageModel() {
     }
 
-    public MessageModel(String sender, String timeStamp, String message) {
-        this.sender = sender;
-        this.timeStamp = timeStamp;
-        this.message = message;
-    }
+    public int getId() { return id; }
 
-    public String getSender() {
-        return sender;
-    }
+    public void setId(int id) { this.id = id; }
 
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
+    public String getFrom() { return from; }
 
-    public String getTimeStamp() {
-        return timeStamp;
-    }
+    public void setFrom(String from) { this.from = from; }
 
-    public void setTimeStamp(String timeStamp) {
-        this.timeStamp = timeStamp;
-    }
+    public String getSubject() { return subject; }
 
-    public String getMessage() {
-        return message;
-    }
+    public void setSubject(String subject) { this.subject = subject; }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+    public String getPicture() { return picture; }
+
+    public void setPicture(String picture) { this.picture = picture; }
+
+    public boolean isImportant() { return isImportant; }
+
+    public void setImportant(boolean important) { isImportant = important; }
+
+    public boolean isRead() { return isRead; }
+
+    public void setRead(boolean read) { isRead = read; }
+
+    public int getColor() { return color; }
+
+    public void setColor(int color) { this.color = color; }
+
+    public String getTimeStamp() { return timeStamp; }
+
+    public void setTimeStamp(String timeStamp) { this.timeStamp = timeStamp; }
+
+    public String getMessage() { return message; }
+
+    public void setMessage(String message) { this.message = message; }
 }
