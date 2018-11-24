@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             mode.getMenuInflater().inflate(R.menu.menu_action_mode, menu);
 
             // disable swipe refresh if action mode is enabled
-            swipeRefreshLayout.setEnabled(false);
+            //swipeRefreshLayout.setEnabled(false);
             return true;
         }
 
