@@ -1,127 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:mContext="info.androidhive.gmail.activity.MainActivity">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-    <android.support.design.widget.AppBarLayout
+    <include
+        layout="@layout/app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_main" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@drawable/ic_flash_off_white_24dp" />
-
-    <!--pippo-->
-
-</android.support.design.widget.CoordinatorLayout>
-
-
-
-
-
-<!--<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="alessandro.datasecurity.MainActivity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/banner"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/colorAccent"
-            android:paddingBottom="42dp"
-            android:paddingTop="42dp"
-            android:text="News"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:textSize="40sp" />
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/myRecycleView">
-        </android.support.v7.widget.RecyclerView>
-
-    </LinearLayout>
-
-</ScrollView>-->
-
-<!--<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="alessandro.datasecurity.MainActivity">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:minHeight="?attr/actionBarSize"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recycleView"
-        android:layout_below="@+id/toolbar"/>
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/drawer_view" />
 
-
-    <android.support.v7.widget.AppCompatButton
-        android:text="@string/b_secret_text_encrypt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryWhite"
-        app:backgroundTint="@color/colorBlueGreySecondary"
-        android:id="@+id/bAMEncrypt"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@+id/recycleView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp" />
-
-    <android.support.v7.widget.AppCompatButton
-        android:text="@string/b_secret_text_decrypt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bAMDecrypt"
-        android:textColor="@color/colorPrimaryWhite"
-        app:backgroundTint="@color/colorBlueGreySecondary"
-        android:layout_marginTop="21dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@+id/bAMEncrypt"
-        android:layout_alignEnd="@+id/bAMEncrypt" />
-
-
-</RelativeLayout> -->
+</android.support.v4.widget.DrawerLayout>

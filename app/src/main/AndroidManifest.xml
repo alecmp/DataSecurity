@@ -56,7 +56,7 @@
 
         <activity
             android:name="alessandro.datasecurity.activities.encrypt.EncryptActivity"
-            android:parentActivityName="alessandro.datasecurity.MainActivity"
+            android:parentActivityName="alessandro.datasecurity.Inbox"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="alessandro.datasecurity.activities.stego.StegoActivity"
@@ -64,11 +64,11 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="alessandro.datasecurity.activities.decrypt.DecryptActivity"
-            android:parentActivityName="alessandro.datasecurity.MainActivity"
+            android:parentActivityName="alessandro.datasecurity.Inbox"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="alessandro.datasecurity.activities.decrypt.DecryptResultActivity"
-            android:parentActivityName="alessandro.datasecurity.MainActivity"
+            android:parentActivityName="alessandro.datasecurity.Inbox"
             android:screenOrientation="portrait"></activity>
     </application>
 

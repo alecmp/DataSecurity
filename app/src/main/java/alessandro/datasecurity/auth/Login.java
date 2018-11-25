@@ -10,12 +10,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import alessandro.datasecurity.MainActivity;
-import alessandro.datasecurity.R;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import alessandro.datasecurity.Inbox;
+import alessandro.datasecurity.MainActivity;
+import alessandro.datasecurity.R;
 
 /**
  *Login class
@@ -100,7 +103,7 @@ public class Login extends AppCompatActivity {
                                         Toast.makeText(Login.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
-                                    Intent intent = new Intent(Login.this, MainActivity.class);
+                                    Intent intent = new Intent(Login.this, Inbox.class);
                                     startActivity(intent);
                                     finish();
                                 }

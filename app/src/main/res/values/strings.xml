@@ -18,6 +18,13 @@
     <string name="cancel">Cancel</string>
     <string name="choose_image">Choose Image</string>
 
+
+    <!--Navigation drawer-->
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+
+
+
     <!-- Authentication strings-->
     <string name="action_sign_in_short">Register</string>
     <string name="email">Email</string>
@@ -53,9 +60,11 @@
     <string name="non_stego_image_selected">Selected image is not a proper Stego Image</string>
     <string name="secret_text_empty">Text field is empty !</string>
 
-
-
+    <!--Inbox-->
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
     <string name="action_delete">Delete</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

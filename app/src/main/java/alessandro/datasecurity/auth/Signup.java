@@ -12,8 +12,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import alessandro.datasecurity.Inbox;
 import alessandro.datasecurity.R;
-import alessandro.datasecurity.MainActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -112,7 +113,7 @@ public class Signup extends AppCompatActivity {
                                     }
 
 
-                                    Intent intent = new Intent(Signup.this, MainActivity.class);
+                                    Intent intent = new Intent(Signup.this, Inbox.class);
                                     intent.putExtra("fullname", fullname);
                                     startActivity(intent);
                                     finish();

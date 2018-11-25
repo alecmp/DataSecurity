@@ -1,359 +1,176 @@
 package alessandro.datasecurity;
 
-import android.content.res.TypedArray;
-import android.graphics.Color;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ActionMode;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
 
-import alessandro.datasecurity.utils.Database;
-import alessandro.datasecurity.utils.DividerItemDecoration;
-import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, MessagesAdapter.MessageAdapterListener  {
-    public static List<MessageModel> messages = new ArrayList<>();
-    private FirebaseUser user;
-    private DatabaseReference myRef;
+    public static Toolbar toolbar;
+    DrawerLayout drawer;
+    ActionBarDrawerToggle toggle;
+    public static android.support.v4.app.FragmentManager sFm;
+    private SharedPreferences pref;
+    private static final String SHARED_PREFERENCES_TYPE = "Account";
+    FirebaseUser user;
+    //dichiarazioni Firebase
     static FirebaseDatabase database;
-    private MessagesAdapter mAdapter;
     private String userId;
-    private RecyclerView mRecyclerView;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private ActionModeCallback actionModeCallback;
-    private ActionMode actionMode;
-
-    Query query;
+    private Uri photoUrl;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        messages = new ArrayList<>();
-        database = Database.getDatabase();
-        myRef = FirebaseDatabase.getInstance().getReference();
-        user = FirebaseAuth.getInstance().getCurrentUser();
+        drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+       // View header = navigationView.getHeaderView(0);
 
-        if (user.getUid() != null) {
-            userId = user.getUid();
-        }
-        //    DatabaseReference mNewDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        // mNewDatabaseReference.child("users").child(userId).child("fiscalCode").setValue("aaaaaaaaaa");
-        mRecyclerView = findViewById(R.id.recycler_view);
-
-
-        query = FirebaseDatabase.getInstance()
-                .getReference()
-                .child("users")
-                .child(userId)
-                .child("messages ")
-                .getRef();
-
-        ButterKnife.bind(this);
-
-        FirebaseRecyclerOptions<MessageModel> options = new FirebaseRecyclerOptions
-                .Builder<MessageModel>()
-                .setQuery(query, MessageModel.class)
-                .build();
-
-        if (mRecyclerView != null) {
-            mRecyclerView.setHasFixedSize(true);
-        }
-
-
-        mAdapter = new MessagesAdapter(this, messages, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        mRecyclerView.setAdapter(mAdapter);
-        actionModeCallback = new ActionModeCallback();
-
-
-        //   MessageModel mNewMessage = new MessageModel("alessandro", "11/05/2018", "we pirla");
-        // myRef.child("users").child(userId).child("messages ").push().setValue(mNewMessage);
-
-
-
-
-        DatabaseReference ref = FirebaseDatabase.getInstance()
-                .getReference()
-                .child("users")
-                .child(userId)
-                .child("messages ")
-                .getRef();
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //Your Logic here
-                for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
-                    MessageModel mModel = eventSnapshot.getValue(MessageModel.class);
-                    mModel.setColor(getRandomMaterialColor("400"));
-                    messages.add(mModel);
-
-                }
-                mAdapter.notifyDataSetChanged();
-                //swipeRefreshLayout.setRefreshing(false);
-            }
+        toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-
-
-
-    }
-
-
-
-  /*  @OnClick({R.id.bAMEncrypt, R.id.bAMDecrypt})
-    public void onButtonClick(View view) {
-        if (view.getId() == R.id.bAMEncrypt) {
-            Intent intent = new Intent(MainActivity.this, EncryptActivity.class);
-            startActivity(intent);
-        } else if (view.getId() == R.id.bAMDecrypt) {
-            Intent intent = new Intent(MainActivity.this, DecryptActivity.class);
-            startActivity(intent);
-        }
-    }*/
-
-
-  /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.sign_out, menu);
-        return true;
-    }
-*/
-
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (item.getItemId()) {
-            case R.id.action_signout:
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(this, Login.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                break;
-
-            default:
-
-                return super.onOptionsItemSelected(item);
-
-        }
-        return false;
-    }*/
+            public void onDrawerOpened(View drawerView) {
 
 /*
-    public static class MessageViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener  {
-        TextView sender;
-        TextView timeStamp;
-        TextView message;
 
-        @Override
-        public boolean onLongClick(View view) {
-            return false;
+                photoUrl = Uri.parse("https://firebasestorage.googleapis.com/v0/b/dibapp-b8fda.appspot.com/o/profile_icon.png?alt=media&token=cf3742c4-acb6-4c2d-b2ae-a516569aa082");
+                if (user != null && user.getPhotoUrl() != null) {
+                    photoUrl = user.getPhotoUrl();
+                }
+
+                pref = getSharedPreferences(SHARED_PREFERENCES_TYPE, MODE_PRIVATE);
+                String localStr = pref.getString(userId, null);
+                if (localStr != null) {
+                    Uri localUrl = Uri.parse(localStr);
+                    if (localUrl != photoUrl) {
+                        photoUrl = localUrl;
+
+
+                    }
+
+                }
+
+                Glide.with(getApplicationContext())
+                        .load(photoUrl)
+                        //.skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                        .into(profile);
+*/
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+        };
+
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(this);
+        if (savedInstanceState == null) {
+            FragmentManager fm = getSupportFragmentManager();
+            fm.beginTransaction().replace(R.id.content_frame, new InboxFragment()).commit();
         }
+    }
 
-        View mView;
 
-        public MessageViewHolder(View v) {
-            super(v);
-            mView = itemView;
-            sender = v.findViewById(R.id.vsender);
-            timeStamp = v.findViewById(R.id.vtimeStamp);
-            message = v.findViewById(R.id.vmessage);
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
-
-    }*/
-
-    /**
-     * chooses a random color from array.xml
-     */
-    private int getRandomMaterialColor(String typeColor) {
-        int returnColor = Color.GRAY;
-        int arrayId = getResources().getIdentifier("mdcolor_" + typeColor, "array", getPackageName());
-
-        if (arrayId != 0) {
-            TypedArray colors = getResources().obtainTypedArray(arrayId);
-            int index = (int) (Math.random() * colors.length());
-            returnColor = colors.getColor(index, Color.GRAY);
-            colors.recycle();
-        }
-        return returnColor;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_search) {
-            Toast.makeText(getApplicationContext(), "Search...", Toast.LENGTH_SHORT).show();
+/*
+        if (id == R.id.save_exam) {
             return true;
-        }
+        }*/
+
 
         return super.onOptionsItemSelected(item);
+
+
     }
 
+
+    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public void onRefresh() {
-        // swipe refresh is performed, fetch the messages again
-        //getInbox();
-    }
+    public boolean onNavigationItemSelected(MenuItem item) {
+        sFm = getSupportFragmentManager();
+        int id = item.getItemId();
 
-    @Override
-    public void onIconClicked(int position) {
-        if (actionMode == null) {
-            actionMode = startSupportActionMode(actionModeCallback);
+        if (id == R.id.nav_camera) {
+
+            toolbar.getMenu().clear();
+            toolbar.inflateMenu(R.menu.menu_main);
+
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new InboxFragment()).commit();
+
+
+        } else if (id == R.id.nav_slideshow) {
+
+            toolbar.getMenu().clear();
+            toolbar.inflateMenu(R.menu.menu_main);
+
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new InboxFragment()).commit();
+
+
         }
+            setTitle(item.getTitle());
 
-        toggleSelection(position);
-    }
-
-    @Override
-    public void onIconImportantClicked(int position) {
-        // Star icon is clicked,
-        // mark the message as important
-        MessageModel message = messages.get(position);
-        message.setImportant(!message.isImportant());
-        messages.set(position, message);
-        mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onMessageRowClicked(int position) {
-        // verify whether action mode is enabled or not
-        // if enabled, change the row state to activated
-        if (mAdapter.getSelectedItemCount() > 0) {
-            enableActionMode(position);
-        } else {
-            // read the message which removes bold from the row
-            MessageModel message = messages.get(position);
-            message.setRead(true);
-            messages.set(position, message);
-            mAdapter.notifyDataSetChanged();
-
-            Toast.makeText(getApplicationContext(), "Read: " + message.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onRowLongClicked(int position) {
-        // long press is performed, enable action mode
-        enableActionMode(position);
-    }
-
-    private void enableActionMode(int position) {
-        if (actionMode == null) {
-            actionMode = startSupportActionMode(actionModeCallback);
-        }
-        toggleSelection(position);
-    }
-
-    private void toggleSelection(int position) {
-        mAdapter.toggleSelection(position);
-        int count = mAdapter.getSelectedItemCount();
-
-        if (count == 0) {
-            actionMode.finish();
-        } else {
-            actionMode.setTitle(String.valueOf(count));
-            actionMode.invalidate();
-        }
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
 
-    private class ActionModeCallback implements ActionMode.Callback {
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            mode.getMenuInflater().inflate(R.menu.menu_action_mode, menu);
-
-            // disable swipe refresh if action mode is enabled
-            //swipeRefreshLayout.setEnabled(false);
-            return true;
-        }
-
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return false;
-        }
-
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_delete:
-                    // delete all the selected messages
-                    deleteMessages();
-                    mode.finish();
-                    return true;
-
-                default:
-                    return false;
-            }
-        }
-
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-            mAdapter.clearSelections();
-            swipeRefreshLayout.setEnabled(true);
-            actionMode = null;
-            mRecyclerView.post(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.resetAnimationIndex();
-                    // mAdapter.notifyDataSetChanged();
-                }
-            });
-        }
-    }
-
-    // deleting the messages from recycler view
-    private void deleteMessages() {
-        mAdapter.resetAnimationIndex();
-        List<Integer> selectedItemPositions =
-                mAdapter.getSelectedItems();
-        for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
-            mAdapter.removeData(selectedItemPositions.get(i));
-        }
-        mAdapter.notifyDataSetChanged();
-    }
-
+   /* public void onListFragmentInteraction(DummyContent.DummyItem uri) {
+        //you can leave it empty
+    }*/
 }
