@@ -106,9 +106,8 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
 
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference()
-                .child("users")
-                .child(userId)
                 .child("messages")
+                .child(userId)
                 .getRef();
 
         ref.addValueEventListener(new ValueEventListener() {

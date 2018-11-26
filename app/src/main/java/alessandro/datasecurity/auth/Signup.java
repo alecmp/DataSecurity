@@ -122,27 +122,16 @@ public class Signup extends AppCompatActivity {
                                             .getReference()
                                             .child("users")
                                             .child(userId)
-                                            .child("info")
                                             .getRef();
-                                    ref.push().setValue(new User(userId, fullname, email, null));
+                                    ref.setValue(new User(userId, fullname, email, null));
 
                                     /////////////////add contacts////////////
-                                    DatabaseReference ref2 = FirebaseDatabase.getInstance()
-                                            .getReference()
-                                            .child("users")
-                                            .child(userId)
-                                            .child("contacts")
-                                            .getRef();
-                                    ref2.push().setValue(new User("cccccccc"));
-                                    ref2.push().setValue(new User("aaaaaa"));
-                                    ref2.push().setValue(new User("bbbbbbbbb"));
                                     /////////////////////////////////////
                                     ///////add messages/////////////////////////
                                     DatabaseReference ref3 = FirebaseDatabase.getInstance()
                                             .getReference()
-                                            .child("users")
-                                            .child(userId)
                                             .child("messages")
+                                            .child(userId)
                                             .getRef();
                                     MessageModel mNewMessage = new MessageModel(1, "Gino", "info top secret", "puzzi", "22 Nov 2018", null);
                                     MessageModel mNewMessage2 = new MessageModel(1, "Gino", "info top secret", "puzzi", "22 Nov 2018", null);
