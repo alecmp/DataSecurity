@@ -1,151 +1,81 @@
 package alessandro.datasecurity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
+import alessandro.datasecurity.utils.Database;
 
 public class ContactsActivity extends AppCompatActivity {
-
-
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLayoutManager;
-    static FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference mDatabaseReference;
     private String userId;
-    ArrayList<User> contacts = new ArrayList<User>();
-    TextView mEmptyView;
-    FirebaseRecyclerAdapter<User, MyViewHolder> adapter;
-
-
-    public ContactsActivity() {
-    }
-
+    private FirebaseUser user;
+    private RecyclerView mPeopleRV;
+    private DatabaseReference mDatabase;
+    static FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private FirebaseRecyclerAdapter<MessageModel, ContactsViewHolder> mContactsRVAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_contacts);
 
+        setTitle("Nuovo messaggio");
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.contacts_toolbar);
+        setSupportActionBar(myToolbar);
 
-        setContentView(R.layout.activity_main);
-        mRecyclerView = findViewById(R.id.recycler_view);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setHomeAsUpIndicator(R.drawable.ic_flash_off_white_24dp);
 
-        fillRecyclerView();
+        database = Database.getDatabase();
+        myRef = FirebaseDatabase.getInstance().getReference();
+        //"News" here will reflect what you have called your database in Firebase.
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("News");
+        mDatabase.keepSynced(true);
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
-                mLayoutManager.getOrientation());
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
-
-
-    /*    mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-
-
-            @Override
-            public void onItemClick(View view, int position) {
-
-                View w = mRecyclerView.getLayoutManager().findViewByPosition(position);
-                TextView name =  w.findViewById(R.id.fullname);
-
-                Intent intent = new Intent(view.getContext(), ExamDetailsActivity.class);
-                intent.putExtra("name", name.getText().toString());
-                startActivity(intent);
-
-
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
-            }
-        }));
-*/
-
-        contacts = new ArrayList<User>();
-        mDatabaseReference = database.getReference();
-
-
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
-        mDatabaseReference.addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        for (DataSnapshot examSnapshot : dataSnapshot.getChildren()) {
-
-                            User contact = examSnapshot.getValue(User.class);
-                            contacts.add(contact);
-                            Log.e("Chat", "mDatabasereference: " + contacts.size());
-
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-
-    }
-
-
-    public void fillRecyclerView() {
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        userId = user.getUid();
-        mDatabaseReference = database.getReference();
-        if (mRecyclerView != null) {
-
-            mRecyclerView.setHasFixedSize(true);
+        mPeopleRV = (RecyclerView) findViewById(R.id.recycler_view);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user.getUid() != null) {
+            userId = user.getUid();
         }
 
+       Query query = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("users")
+                .child(userId)
+                .child("messages ")
+                .getRef();
 
-        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mPeopleRV.hasFixedSize();
+        mPeopleRV.setLayoutManager(new LinearLayoutManager(this));
 
+        FirebaseRecyclerOptions personsOptions = new FirebaseRecyclerOptions.Builder<MessageModel>().setQuery(query, MessageModel.class).build();
 
-        /*DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
-                mLayoutManager.getOrientation());
-        mRecyclerView.addItemDecoration(dividerItemDecoration);*/
-
-
-        DatabaseReference personsRef = FirebaseDatabase.getInstance().getReference().child("News");
-        Query personsQuery = personsRef.orderByKey();
-
-
-        FirebaseRecyclerOptions personsOptions = new FirebaseRecyclerOptions.Builder<User>().setQuery(personsQuery, User.class).build();
-
-        adapter = new FirebaseRecyclerAdapter<User, MyViewHolder>(personsOptions) {
+        mContactsRVAdapter = new FirebaseRecyclerAdapter<MessageModel, ContactsViewHolder>(personsOptions) {
             @Override
-            protected void onBindViewHolder(MyViewHolder holder, final int position, final User model) {
-                holder.setName(model.getName());
+            protected void onBindViewHolder(ContactsViewHolder holder, final int position, final MessageModel model) {
+                holder.setName(model.getFrom());
+
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //  final String url = model.getUrl();
-                        /*Intent intent = new Intent(getApplicationContext(), NewsWebView.class);
+                       /* final String url = model.getUrl();
+                        Intent intent = new Intent(getApplicationContext(), NewsWebView.class);
                         intent.putExtra("id", url);
                         startActivity(intent);*/
                     }
@@ -153,54 +83,41 @@ public class ContactsActivity extends AppCompatActivity {
             }
 
             @Override
-            public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            public ContactsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.contact_list_row, parent, false);
 
-                return new MyViewHolder(view);
+                return new ContactsViewHolder(view);
             }
         };
 
-        mRecyclerView.setAdapter(adapter);
-
-
+        mPeopleRV.setAdapter(mContactsRVAdapter);
     }
-
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onStart() {
+        super.onStart();
+        mContactsRVAdapter.startListening();
+    }
 
-        if (resultCode == 1) {
-
-            String key = data.getStringExtra("key");
-            mDatabaseReference.child(key).removeValue();
-
-
-        } else {
-        }
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        mContactsRVAdapter.stopListening();
 
     }
 
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-
+    public static class ContactsViewHolder extends RecyclerView.ViewHolder{
         View mView;
-
-        public MyViewHolder(View v) {
-            super(v);
+        public ContactsViewHolder(View itemView){
+            super(itemView);
             mView = itemView;
-
         }
-
-        public void setName(String name) {
-            TextView vname = mView.findViewById(R.id.fullname);
+        public void setName(String name){
+            TextView vname =  mView.findViewById(R.id.fullname);
             vname.setText(name);
         }
 
-
     }
-
 }

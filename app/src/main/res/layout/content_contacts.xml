@@ -5,15 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:mContext="info.androidhive.gmail.activity.MainActivity"
-    tools:showIn="@layout/fragment_inbox">
+    tools:mContext="alessandro.datasecurity.ContactsActivity"
+    tools:showIn="@layout/activity_contacts">
 
+        <TextView
+            android:id="@+id/icon_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@android:color/white"
+            android:text="CIAO"
+            android:textSize="@dimen/icon_text" />
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical" />
-
-
 
 </android.support.constraint.ConstraintLayout>
