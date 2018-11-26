@@ -22,8 +22,6 @@
     <dimen name="logo_w_h">100dp</dimen>
 
 
-
-
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="padding_list_row">16dp</dimen>
     <dimen name="messages_padding_left">72dp</dimen>

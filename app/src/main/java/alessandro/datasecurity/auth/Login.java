@@ -16,7 +16,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import alessandro.datasecurity.Inbox;
 import alessandro.datasecurity.MainActivity;
 import alessandro.datasecurity.R;
 
@@ -103,7 +102,7 @@ public class Login extends AppCompatActivity {
                                         Toast.makeText(Login.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
-                                    Intent intent = new Intent(Login.this, Inbox.class);
+                                    Intent intent = new Intent(Login.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }

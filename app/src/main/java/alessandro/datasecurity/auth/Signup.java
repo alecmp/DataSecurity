@@ -12,22 +12,26 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import alessandro.datasecurity.Inbox;
-import alessandro.datasecurity.R;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import alessandro.datasecurity.MainActivity;
+import alessandro.datasecurity.R;
+import alessandro.datasecurity.User;
+import alessandro.datasecurity.utils.Database;
 
 /**
  * Activity to sign on
  */
 public class Signup extends AppCompatActivity {
-
-
+    static FirebaseDatabase database;
+    private DatabaseReference myRef;
     private static String fullname;
     static {
         fullname = null;
@@ -46,7 +50,7 @@ public class Signup extends AppCompatActivity {
 
 
         auth = FirebaseAuth.getInstance();
-
+        database = Database.getDatabase();
         btnSignIn = findViewById(R.id.sign_in_button);
         btnSignUp = findViewById(R.id.sign_up_button);
         inputFullName = findViewById(R.id.fullname);
@@ -67,7 +71,7 @@ public class Signup extends AppCompatActivity {
             public void onClick(View v) {
 
                 fullname = inputFullName.getText().toString().trim();
-                String email = inputEmail.getText().toString().trim();
+                final String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
 
 
@@ -111,9 +115,16 @@ public class Signup extends AppCompatActivity {
                                     if (user != null) {
                                         user.updateProfile(profileUpdates);
                                     }
+                                    String userId = user.getUid();
+                                    /* add user to Db */
+                                    DatabaseReference ref = FirebaseDatabase.getInstance()
+                                            .getReference()
+                                            .child("users")
+                                            .child(userId)
+                                            .getRef();
+                                    ref.push().setValue(new User(userId, fullname, email));
 
-
-                                    Intent intent = new Intent(Signup.this, Inbox.class);
+                                    Intent intent = new Intent(Signup.this, MainActivity.class);
                                     intent.putExtra("fullname", fullname);
                                     startActivity(intent);
                                     finish();

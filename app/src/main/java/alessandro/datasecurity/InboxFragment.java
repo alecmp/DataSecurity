@@ -1,8 +1,10 @@
 package alessandro.datasecurity;
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -63,10 +65,19 @@ public class InboxFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         database = Database.getDatabase();
         myRef = FirebaseDatabase.getInstance().getReference();
         user = FirebaseAuth.getInstance().getCurrentUser();
-
         if (user.getUid() != null) {
             userId = user.getUid();
         }
+
+        FloatingActionButton fab = view.findViewById(R.id.inbox_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ContactsActivity.class);
+                startActivity(intent);
+
+            }
+        });
         mRecyclerView = view.findViewById(R.id.recycler_view);
         query = FirebaseDatabase.getInstance()
                 .getReference()
