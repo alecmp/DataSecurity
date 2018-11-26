@@ -1,5 +1,8 @@
 package alessandro.datasecurity;
 
+import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +26,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import alessandro.datasecurity.activities.encrypt.EncryptActivity;
 import alessandro.datasecurity.utils.CircleTransform;
 import alessandro.datasecurity.utils.Database;
+import alessandro.datasecurity.utils.DividerItemDecoration;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -69,22 +74,24 @@ public class ContactsActivity extends AppCompatActivity {
 
         mPeopleRV.hasFixedSize();
         mPeopleRV.setLayoutManager(new LinearLayoutManager(this));
-
+        mPeopleRV.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         FirebaseRecyclerOptions personsOptions = new FirebaseRecyclerOptions.Builder<User>().setQuery(query, User.class).build();
 
         mContactsRVAdapter = new FirebaseRecyclerAdapter<User, ContactsViewHolder>(personsOptions) {
             @Override
             protected void onBindViewHolder(ContactsViewHolder holder, final int position, final User model) {
                 holder.setName(model.getName());
-
+                model.setColor(getRandomMaterialColor("400"));
+                // displaying the first letter of From in icon text
+                holder.iconText.setText(model.getName().substring(0, 1));
                 applyProfilePicture(holder, model);
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       /* final String url = model.getUrl();
-                        Intent intent = new Intent(getApplicationContext(), NewsWebView.class);
-                        intent.putExtra("id", url);
-                        startActivity(intent);*/
+                       /* final String url = model.getUrl();*/
+                        Intent intent = new Intent(getApplicationContext(), EncryptActivity.class);
+                        //intent.putExtra("id", url);
+                        startActivity(intent);
                     }
                 });
             }
@@ -131,6 +138,20 @@ public class ContactsActivity extends AppCompatActivity {
             holder.iconText.setVisibility(View.VISIBLE);
         }
     }
+
+    private int getRandomMaterialColor(String typeColor) {
+        int returnColor = Color.GRAY;
+        int arrayId = getResources().getIdentifier("mdcolor_" + typeColor, "array", getPackageName());
+
+        if (arrayId != 0) {
+            TypedArray colors = getResources().obtainTypedArray(arrayId);
+            int index = (int) (Math.random() * colors.length());
+            returnColor = colors.getColor(index, Color.GRAY);
+            colors.recycle();
+        }
+        return returnColor;
+    }
+
 
     public static class ContactsViewHolder extends RecyclerView.ViewHolder{
         View mView;

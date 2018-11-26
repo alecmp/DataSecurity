@@ -71,7 +71,7 @@
                 android:layout_width="25dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/ic_done" />ic_done
+                android:src="@drawable/ic_done" />
         </RelativeLayout>
 
         <RelativeLayout

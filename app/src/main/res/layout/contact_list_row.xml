@@ -48,11 +48,11 @@
                 android:layout_height="@dimen/icon_width_height"
                 android:src="@drawable/bg_circle" />
 
-            <ImageView
+           <!-- <ImageView
                 android:layout_width="25dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/fui_ic_phone_white_24dp" /> <!-- pippo -->
+                android:src="@drawable/fui_ic_phone_white_24dp" /> &lt;!&ndash; pippo &ndash;&gt;-->
         </RelativeLayout>
 
         <RelativeLayout

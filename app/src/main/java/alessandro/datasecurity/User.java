@@ -47,6 +47,10 @@ public class User {
 
     public int getColor() { return color; }
 
+    public void setPicture(String picture) { this.picture = picture; }
+
+    public void setColor(int color) { this.color = color; }
+
     @Override
     public String toString() {
         return "User{" +
