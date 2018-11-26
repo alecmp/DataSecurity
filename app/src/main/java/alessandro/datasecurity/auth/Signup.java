@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import alessandro.datasecurity.MainActivity;
+import alessandro.datasecurity.MessageModel;
 import alessandro.datasecurity.R;
 import alessandro.datasecurity.User;
 import alessandro.datasecurity.utils.Database;
@@ -121,9 +122,36 @@ public class Signup extends AppCompatActivity {
                                             .getReference()
                                             .child("users")
                                             .child(userId)
+                                            .child("info")
                                             .getRef();
-                                    ref.push().setValue(new User(userId, fullname, email));
+                                    ref.push().setValue(new User(userId, fullname, email, null));
 
+                                    /////////////////add contacts////////////
+                                    DatabaseReference ref2 = FirebaseDatabase.getInstance()
+                                            .getReference()
+                                            .child("users")
+                                            .child(userId)
+                                            .child("contacts")
+                                            .getRef();
+                                    ref2.push().setValue(new User("cccccccc"));
+                                    ref2.push().setValue(new User("aaaaaa"));
+                                    ref2.push().setValue(new User("bbbbbbbbb"));
+                                    /////////////////////////////////////
+                                    ///////add messages/////////////////////////
+                                    DatabaseReference ref3 = FirebaseDatabase.getInstance()
+                                            .getReference()
+                                            .child("users")
+                                            .child(userId)
+                                            .child("messages")
+                                            .getRef();
+                                    MessageModel mNewMessage = new MessageModel(1, "Gino", "info top secret", "puzzi", "22 Nov 2018", null);
+                                    MessageModel mNewMessage2 = new MessageModel(1, "Gino", "info top secret", "puzzi", "22 Nov 2018", null);
+                                    MessageModel mNewMessage3 = new MessageModel(1, "Gino", "info top secret", "puzzi", "22 Nov 2018", null);
+                                    ref3.push().setValue(mNewMessage);
+                                    ref3.push().setValue(mNewMessage2);
+                                    ref3.push().setValue(mNewMessage3);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                     Intent intent = new Intent(Signup.this, MainActivity.class);
                                     intent.putExtra("fullname", fullname);
                                     startActivity(intent);

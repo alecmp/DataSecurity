@@ -59,7 +59,7 @@
     <string name="non_stego_image_selected">Selected image is not a proper Stego Image</string>
     <string name="secret_text_empty">Text field is empty !</string>
 
-    <!--Inbox-->
+    <!--nboFrag-->
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
     <string name="action_delete">Delete</string>

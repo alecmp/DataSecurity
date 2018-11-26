@@ -40,7 +40,7 @@ public class ContactsActivity extends AppCompatActivity {
 
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_flash_off_white_24dp);
+        ab.setHomeAsUpIndicator(R.drawable.ic_back);
 
         database = Database.getDatabase();
         myRef = FirebaseDatabase.getInstance().getReference();
@@ -58,7 +58,7 @@ public class ContactsActivity extends AppCompatActivity {
                 .getReference()
                 .child("users")
                 .child(userId)
-                .child("messages ")
+                .child("contacts")
                 .getRef();
 
         mPeopleRV.hasFixedSize();

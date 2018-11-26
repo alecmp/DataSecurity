@@ -49,7 +49,7 @@
         </activity>
         <activity
             android:name=".activities.encrypt.EncryptActivity"
-            android:parentActivityName=".Inbox"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.stego.StegoActivity"
@@ -57,11 +57,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.decrypt.DecryptActivity"
-            android:parentActivityName=".Inbox"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.decrypt.DecryptResultActivity"
-            android:parentActivityName=".Inbox"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ContactsActivity"

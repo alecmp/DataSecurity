@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -38,7 +37,7 @@ import alessandro.datasecurity.utils.DividerItemDecoration;
 import butterknife.ButterKnife;
 
 
-public class InboxFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, MessagesAdapter.MessageAdapterListener {
+public class InboxFragment extends Fragment implements  MessagesAdapter.MessageAdapterListener {
     public static List<MessageModel> messages = new ArrayList<>();
 
 
@@ -48,7 +47,6 @@ public class InboxFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     private MessagesAdapter mAdapter;
     private String userId;
     private RecyclerView mRecyclerView;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private ActionModeCallback actionModeCallback;
     private ActionMode actionMode;
 
@@ -110,7 +108,7 @@ public class InboxFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 .getReference()
                 .child("users")
                 .child(userId)
-                .child("messages ")
+                .child("messages")
                 .getRef();
 
         ref.addValueEventListener(new ValueEventListener() {
@@ -176,11 +174,7 @@ public class InboxFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onRefresh() {
-        // swipe refresh is performed, fetch the messages again
-        //getInbox();
-    }
+
 
     @Override
     public void onIconClicked(int position) {

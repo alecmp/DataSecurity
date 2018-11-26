@@ -3,7 +3,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_flash_off_white_24dp"
+            android:icon="@drawable/ic_back"
             android:title="@string/action_delete" />
         <item
             android:id="@+id/nav_gallery"
@@ -17,5 +17,9 @@
             android:id="@+id/nav_manage"
             android:icon="@drawable/fui_ic_github_white_24dp"
             android:title="@string/action_settings" />
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_exit"
+            android:title="Logout" />
     </group>
 </menu>

@@ -1,5 +1,6 @@
 package alessandro.datasecurity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,11 +15,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
+import alessandro.datasecurity.auth.Login;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener {
 
 
     public static Toolbar toolbar;
@@ -43,7 +47,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-       // View header = navigationView.getHeaderView(0);
+        // View header = navigationView.getHeaderView(0);
 
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
@@ -133,7 +137,6 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
 
-
     }
 
 
@@ -147,8 +150,6 @@ public class MainActivity extends AppCompatActivity
 
             toolbar.getMenu().clear();
             toolbar.inflateMenu(R.menu.menu_main);
-
-
             getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new InboxFragment()).commit();
 
 
@@ -156,13 +157,17 @@ public class MainActivity extends AppCompatActivity
 
             toolbar.getMenu().clear();
             toolbar.inflateMenu(R.menu.menu_main);
-
-
             getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new InboxFragment()).commit();
 
+        } else if (id == R.id.logout) {
+
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(this, Login.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
 
         }
-            setTitle(item.getTitle());
+        setTitle(item.getTitle());
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -16,6 +16,15 @@ public class MessageModel {
     public MessageModel() {
     }
 
+    public MessageModel(int id, String from, String subject, String message, String timeStamp, String picture) {
+        this.id = id;
+        this.from = from;
+        this.subject = subject;
+        this.message = message;
+        this.timeStamp = timeStamp;
+        this.picture = picture;
+    }
+
     public int getId() { return id; }
 
     public void setId(int id) { this.id = id; }

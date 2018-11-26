@@ -4,19 +4,25 @@ public class User {
     private String name;
     private String email;
     private String uid;
+    private String photo;
 
 
     public User() {
 
     }
 
-    public User(String uid, String name, String email) {
+    public User(String uid, String name, String email, String photo) {
         this.name = name;
         this.email = email;
         this.uid = uid;
-
+        this.photo = photo;
     }
-//GETTERS & SETTERS//
+
+    public User(String uid) {
+        this.uid = uid;
+    }
+
+    public String getPhoto() { return photo; }
 
     public String getEmail() {
         return email;
@@ -33,7 +39,6 @@ public class User {
     public void setUid(String uid) {
         this.uid = uid;
     }
-
 
     public String getName() { return name; }
 

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/fui_ic_github_white_24dp"
+    android:background="@drawable/nav_drawer_bg"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -12,16 +12,16 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
 
-    <!--<de.hdodenhof.circleimageview.CircleImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_profile_photo"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_below="@+id/header_cover_image"
+        android:layout_below="@drawable/nav_drawer_bg"
         android:layout_centerHorizontal="true"
         android:background="@drawable/fui_ic_github_white_24dp"
         android:elevation="5dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/fui_ic_github_white_24dp" />-->
+        android:src="@drawable/fui_ic_github_white_24dp" />
 
 
     <TextView

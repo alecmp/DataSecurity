@@ -215,10 +215,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
 
     private void applyImportant(MyViewHolder holder, MessageModel message) {
         if (message.isImportant()) {
-           holder.iconImp.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_flash_off_white_24dp));
+           holder.iconImp.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_important));
            holder.iconImp.setColorFilter(ContextCompat.getColor(mContext, R.color.icon_tint_selected));
         } else {
-           holder.iconImp.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.fui_ic_twitter_bird_white_24dp));
+           holder.iconImp.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_important));
             holder.iconImp.setColorFilter(ContextCompat.getColor(mContext, R.color.icon_tint_normal));
         }
     }

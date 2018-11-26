@@ -5,8 +5,8 @@
     tools:mContext="info.androidhive.gmail.activity.MainActivity">
     <item
         android:id="@+id/action_delete"
-        android:icon="@drawable/fui_ic_phone_white_24dp"
+        android:icon="@drawable/ic_delete"
         android:orderInCategory="100"
         android:title="@string/action_delete"
-        app:showAsAction="always" /> <!-- pippo -->
+        app:showAsAction="always" />
 </menu>
