@@ -41,6 +41,7 @@ public class ContactsActivity extends AppCompatActivity {
     static FirebaseDatabase database;
     private DatabaseReference myRef;
     private FirebaseRecyclerAdapter<User, ContactsViewHolder> mContactsRVAdapter;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

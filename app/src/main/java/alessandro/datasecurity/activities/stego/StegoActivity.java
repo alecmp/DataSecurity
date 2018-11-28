@@ -4,21 +4,25 @@ package alessandro.datasecurity.activities.stego;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -168,11 +172,10 @@ public class StegoActivity extends AppCompatActivity implements StegoView {
     Uri imageURI = null;
 
 
-    Bitmap icon =((BitmapDrawable)ivStegoImage.getDrawable()).getBitmap();
+    Bitmap bitmap =((BitmapDrawable)ivStegoImage.getDrawable()).getBitmap();
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    icon.compress(Bitmap.CompressFormat.PNG, 100, baos);
-    byte[] b = baos.toByteArray();
-    String temp = Base64.encodeToString(b, Base64.DEFAULT);
+    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+    byte[] data = baos.toByteArray();
 
 
     if(stegoImagePath != null) {
@@ -190,9 +193,26 @@ public class StegoActivity extends AppCompatActivity implements StegoView {
             .child("messages")
             .child(receiverId)
             .getRef();
-    MessageModel mNewMessage = new MessageModel(1, "Asdrubale", "info top secret", temp, "22 Nov 2018", null);
-    ref.push().setValue(mNewMessage);
+    MessageModel mNewMessage = new MessageModel(1, "Asdrubale", "info top secret", null, "22 Nov 2018", null);
+    ref.push().setValue(mNewMessage).g;
 
+
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef= storage.getReference();
+    StorageReference userRef = storageRef.child(receiverId).child("1");
+    UploadTask uploadTask = userRef.putBytes(data);
+      uploadTask.addOnFailureListener(new OnFailureListener() {
+          @Override
+          public void onFailure(@NonNull Exception exception) {
+              // Handle unsuccessful uploads
+          }
+      }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+          @Override
+          public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+              // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+              // ...
+          }
+      });
 
 
     /////////////////////////////////////////////////
