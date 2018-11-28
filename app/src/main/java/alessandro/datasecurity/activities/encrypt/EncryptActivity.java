@@ -57,6 +57,7 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
   RadioButton rbText;
   @BindView(R.id.rbImage)
   RadioButton rbImage;
+  private String receiverId;
 
   @OnCheckedChanged({R.id.rbText, R.id.rbImage})
   public void onRadioButtonClick() {
@@ -154,6 +155,15 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    Bundle extras = getIntent().getExtras();
+    if (extras != null) {
+      // Step 6: Get the data out of the Bundle
+      receiverId = extras.getString("receiverId");
+    } else {
+      receiverId = null;
+    }
+
+
     setContentView(R.layout.activity_encrypt);
 
     ButterKnife.bind(this);
@@ -203,8 +213,17 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
 
     //noinspection SimplifiableIfStatement
     if (id == R.id.action_send) {
-      Toast.makeText(this, "Action clicked", Toast.LENGTH_LONG).show();
-      return true;
+        if (secretMessageType == Constants.TYPE_IMAGE) {
+            mPresenter.encryptImage();
+        } else if (secretMessageType == Constants.TYPE_TEXT) {
+            String text = getSecretMessage();
+
+            if (!text.isEmpty()) {
+                mPresenter.encryptText();
+            } else {
+                showToast(R.string.secret_text_empty);
+            }
+        }
     }
 
     return super.onOptionsItemSelected(item);
@@ -283,6 +302,7 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
   @Override
   public void startStegoActivity(String filePath) {
     Intent intent = new Intent(EncryptActivity.this, StegoActivity.class);
+    intent.putExtra("receiverId", receiverId);
     intent.putExtra(Constants.EXTRA_STEGO_IMAGE_PATH, filePath);
     startActivity(intent);
   }

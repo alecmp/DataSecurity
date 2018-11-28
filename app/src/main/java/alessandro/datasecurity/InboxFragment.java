@@ -93,11 +93,6 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
 
         ButterKnife.bind(getActivity());
 
-        FirebaseRecyclerOptions<MessageModel> options = new FirebaseRecyclerOptions
-                .Builder<MessageModel>()
-                .setQuery(query, MessageModel.class)
-                .build();
-
         if (mRecyclerView != null) {
             mRecyclerView.setHasFixedSize(true);
         }

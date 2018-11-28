@@ -90,7 +90,7 @@ public class ContactsActivity extends AppCompatActivity {
                     public void onClick(View v) {
                        /* final String url = model.getUrl();*/
                         Intent intent = new Intent(getApplicationContext(), EncryptActivity.class);
-                        //intent.putExtra("id", url);
+                        intent.putExtra("receiverId", model.getUid());
                         startActivity(intent);
                     }
                 });

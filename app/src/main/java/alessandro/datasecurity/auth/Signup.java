@@ -133,12 +133,12 @@ public class Signup extends AppCompatActivity {
                                             .child("messages")
                                             .child(userId)
                                             .getRef();
-                                    MessageModel mNewMessage = new MessageModel(1, "Gino", "info top secret", "puzzi", "22 Nov 2018", null);
+                                  /*  MessageModel mNewMessage = new MessageModel(1, "Gino", "info top secret", "puzzi", "22 Nov 2018", null);
                                     MessageModel mNewMessage2 = new MessageModel(1, "Gino", "info top secret", "puzzi", "22 Nov 2018", null);
                                     MessageModel mNewMessage3 = new MessageModel(1, "Gino", "info top secret", "puzzi", "22 Nov 2018", null);
                                     ref3.push().setValue(mNewMessage);
                                     ref3.push().setValue(mNewMessage2);
-                                    ref3.push().setValue(mNewMessage3);
+                                    ref3.push().setValue(mNewMessage3);*/
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                     Intent intent = new Intent(Signup.this, MainActivity.class);
