@@ -17,20 +17,42 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
+import alessandro.datasecurity.MessagesAdapter;
 import alessandro.datasecurity.utils.Constants;
+import alessandro.datasecurity.utils.GlideApp;
 import alessandro.datasecurity.utils.StandardMethods;
 import alessandro.datasecurity.R;
+import alessandro.datasecurity.utils.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class DecryptActivity extends AppCompatActivity implements DecryptView {
+  private FirebaseUser user;
+  private String userId;
+  FirebaseStorage storage;
+  StorageReference storageRef;
+  String url;
 //testing
   @BindView(R.id.ivStegoImage)
   ImageView ivStegoImage;
@@ -70,11 +92,48 @@ public class DecryptActivity extends AppCompatActivity implements DecryptView {
 
     ButterKnife.bind(this);
 
+    Intent intent = getIntent();
+    String timeStamp = "20181129130629";
+    if (intent != null) {
+      Bundle bundle = intent.getExtras();
+      timeStamp = bundle.getString("message");
+    }
+
     progressDialog = new ProgressDialog(this);
     progressDialog.setMessage("Please wait...");
-
+    //ivStegoImage.set;
     mPresenter = new DecryptPresenterImpl(this);
     initToolbar();
+
+
+
+    user = FirebaseAuth.getInstance().getCurrentUser();
+    if (user.getUid() != null) {
+      userId = user.getUid();
+    }
+
+    url = null;
+    storage = FirebaseStorage.getInstance();
+    storage.getReference().child("poliba.png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+      @Override
+      public void onSuccess(Uri uri) {
+        // Got the download URL for 'users/me/profile.png' in uri
+
+        GlideApp.with(getApplicationContext())
+                .load(uri.toString())
+                .into(ivStegoImage);
+      }
+    }).addOnFailureListener(new OnFailureListener() {
+      @Override
+      public void onFailure(@NonNull Exception exception) {
+        // Handle any errors
+      }
+    });
+
+
+   /* GlideApp.with(this *//* context *//*)
+            .load(url)
+            .into(ivStegoImage);*/
   }
 
   @Override

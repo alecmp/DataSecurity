@@ -32,9 +32,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import alessandro.datasecurity.activities.decrypt.DecryptActivity;
+import alessandro.datasecurity.activities.encrypt.EncryptActivity;
 import alessandro.datasecurity.utils.Database;
 import alessandro.datasecurity.utils.DividerItemDecoration;
 import butterknife.ButterKnife;
+
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 
 public class InboxFragment extends Fragment implements  MessagesAdapter.MessageAdapterListener {
@@ -196,6 +200,10 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
         mAdapter.notifyDataSetChanged();
     }
 
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void onMessageRowClicked(int position) {
         // verify whether action mode is enabled or not
@@ -208,8 +216,14 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
             message.setRead(true);
             messages.set(position, message);
             mAdapter.notifyDataSetChanged();
+           // Toast.makeText(getContext(), "Read: " + message.getMessage(), Toast.LENGTH_SHORT).show();
 
-            Toast.makeText(getContext(), "Read: " + message.getMessage(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), DecryptActivity.class);
+            intent.putExtra("message", message.getId());
+            startActivity(intent);
+
+
+
         }
     }
 

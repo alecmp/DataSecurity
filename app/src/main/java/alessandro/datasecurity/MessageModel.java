@@ -1,8 +1,10 @@
 package alessandro.datasecurity;
 
+import alessandro.datasecurity.utils.Utils;
+
 public class MessageModel {
 
-    private int id;
+    private long id;
     private String from;
     private String subject;
     private String message;
@@ -16,18 +18,18 @@ public class MessageModel {
     public MessageModel() {
     }
 
-    public MessageModel(int id, String from, String subject, String message, String timeStamp, String picture) {
-        this.id = id;
+    public MessageModel(String from, String subject, String message, String picture) {
+        this.id = Long.parseLong(Utils.getIdCurrentTimestamp());;
         this.from = from;
         this.subject = subject;
         this.message = message;
-        this.timeStamp = timeStamp;
+        this.timeStamp = Utils.getCurrentTimestamp();
         this.picture = picture;
     }
 
-    public int getId() { return id; }
+    public long getId() { return id; }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(long id) { this.id = id; }
 
     public String getFrom() { return from; }
 

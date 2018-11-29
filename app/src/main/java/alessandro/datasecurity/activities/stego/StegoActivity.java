@@ -32,6 +32,7 @@ import alessandro.datasecurity.MessageModel;
 import alessandro.datasecurity.R;
 import alessandro.datasecurity.utils.Constants;
 import alessandro.datasecurity.utils.StandardMethods;
+import alessandro.datasecurity.utils.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -193,13 +194,13 @@ public class StegoActivity extends AppCompatActivity implements StegoView {
             .child("messages")
             .child(receiverId)
             .getRef();
-    MessageModel mNewMessage = new MessageModel(1, "Asdrubale", "info top secret", null, "22 Nov 2018", null);
-    ref.push().setValue(mNewMessage).g;
 
-
+    MessageModel mNewMessage = new MessageModel(Utils.getUser(), "info top secret", null, null);
+    ref.push().setValue(mNewMessage);
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef= storage.getReference();
-    StorageReference userRef = storageRef.child(receiverId).child("1");
+    StorageReference userRef = storageRef.child(receiverId).child(String.valueOf(mNewMessage.getId()));
+
     UploadTask uploadTask = userRef.putBytes(data);
       uploadTask.addOnFailureListener(new OnFailureListener() {
           @Override
