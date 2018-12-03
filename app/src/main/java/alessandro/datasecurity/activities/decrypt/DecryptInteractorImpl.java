@@ -34,7 +34,7 @@ class DecryptInteractorImpl implements DecryptInteractor {
    */
   private class ExtractSecretMessage extends AsyncTask<Void, Void, Map> {
 
-    String stegoImagePath;
+    String stegoImagePath = "/storage/emulated/0/StegoPoliba/SI_1543861355249.png";
 
     ExtractSecretMessage(String stegoImagePath) {
       this.stegoImagePath = stegoImagePath;
@@ -96,7 +96,7 @@ class DecryptInteractorImpl implements DecryptInteractor {
           mListener.onPerformDecryptionFailure(R.string.non_stego_image_selected);
         }
       } else {
-        mListener.onPerformDecryptionFailure(R.string.decrypt_fail);
+        mListener.onPerformDecryptionFailure(R.string.decrypt_fail2);
       }
     }
   }

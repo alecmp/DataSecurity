@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -82,6 +83,9 @@ public class StegoActivity extends AppCompatActivity implements StegoView {
       Bundle bundle = intent.getExtras();
       receiverId = bundle.getString("receiverId");
       stegoImagePath = bundle.getString(Constants.EXTRA_STEGO_IMAGE_PATH);
+
+        Log.d("sgheps " , stegoImagePath);
+
     }
 
     setStegoImage(stegoImagePath);
@@ -124,11 +128,11 @@ public class StegoActivity extends AppCompatActivity implements StegoView {
 
 
       shareStegoImage(stegoImagePath);
-         /* if(!isSaved) {
+         if(!isSaved) {
             isSaved = mPresenter.saveStegoImage(stegoImagePath);
           } else {
             showToast(R.string.image_is_saved);
-          }*/
+          }
     }
     return super.onOptionsItemSelected(item);
   }
@@ -195,7 +199,7 @@ public class StegoActivity extends AppCompatActivity implements StegoView {
             .child(receiverId)
             .getRef();
 
-    MessageModel mNewMessage = new MessageModel(Utils.getUser(), "info top secret", null, null);
+    MessageModel mNewMessage = new MessageModel(Utils.getUser(), "info top secret", null, null, stegoImagePath);
     ref.push().setValue(mNewMessage);
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef= storage.getReference();

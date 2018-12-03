@@ -38,7 +38,7 @@ class DecryptPresenterImpl implements DecryptPresenter, DecryptInteractorImpl.De
   @Override
   public void decryptMessage() {
     if (stegoImagePath.isEmpty()) {
-      mView.showToast(R.string.stego_image_not_selected);
+      mView.showToast(R.string.stego_image_not_selected2);
     } else {
       mView.showProgressDialog();
       mInteractor.performDecryption(stegoImagePath);

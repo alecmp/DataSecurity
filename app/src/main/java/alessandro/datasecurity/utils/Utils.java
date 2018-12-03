@@ -10,8 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-import alessandro.datasecurity.MessagesAdapter;
-
 public class Utils {
     private static FirebaseUser user;
     private DatabaseReference myRef;
@@ -25,8 +23,8 @@ public class Utils {
     }
 
 
-    public static String getCurrentTimestamp() {
-        SimpleDateFormat dateFormatGmt = new SimpleDateFormat("yyyy/MM/dd/HH/mm/ss");
+    public static String getCurrentTimestamp() {//"yyyy/MM/dd/HH/mm/ss"
+        SimpleDateFormat dateFormatGmt = new SimpleDateFormat("dd MMM");
         dateFormatGmt.setTimeZone(TimeZone.getTimeZone("UTC"));
         return dateFormatGmt.format(new Date());
     }

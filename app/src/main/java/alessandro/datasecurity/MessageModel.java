@@ -13,18 +13,27 @@ public class MessageModel {
     private boolean isImportant;
     private boolean isRead;
     private int color = -1;
+    private String path;
 
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 
     public MessageModel() {
     }
 
-    public MessageModel(String from, String subject, String message, String picture) {
+    public MessageModel(String from, String subject, String message, String picture, String path) {
         this.id = Long.parseLong(Utils.getIdCurrentTimestamp());;
         this.from = from;
         this.subject = subject;
         this.message = message;
         this.timeStamp = Utils.getCurrentTimestamp();
         this.picture = picture;
+        this.path = path;
     }
 
     public long getId() { return id; }

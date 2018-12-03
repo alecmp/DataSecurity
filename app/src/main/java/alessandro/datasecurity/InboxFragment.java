@@ -33,12 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import alessandro.datasecurity.activities.decrypt.DecryptActivity;
-import alessandro.datasecurity.activities.encrypt.EncryptActivity;
 import alessandro.datasecurity.utils.Database;
 import alessandro.datasecurity.utils.DividerItemDecoration;
 import butterknife.ButterKnife;
-
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 
 public class InboxFragment extends Fragment implements  MessagesAdapter.MessageAdapterListener {
@@ -220,6 +217,8 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
 
             Intent intent = new Intent(getActivity(), DecryptActivity.class);
             intent.putExtra("message", message.getId());
+            intent.putExtra("path", message.getPath());
+            intent.putExtra("from", message.getFrom());
             startActivity(intent);
 
 
