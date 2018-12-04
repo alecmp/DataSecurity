@@ -29,6 +29,7 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
+import alessandro.datasecurity.MainActivity;
 import alessandro.datasecurity.MessageModel;
 import alessandro.datasecurity.R;
 import alessandro.datasecurity.utils.Constants;
@@ -131,8 +132,14 @@ public class StegoActivity extends AppCompatActivity implements StegoView {
          if(!isSaved) {
             isSaved = mPresenter.saveStegoImage(stegoImagePath);
           } else {
-            showToast(R.string.image_is_saved);
+            //showToast(R.string.image_is_saved);
           }
+        Intent intent = new Intent(StegoActivity.this, MainActivity.class);
+        startActivity(intent);
+
+        finish();
+
+
     }
     return super.onOptionsItemSelected(item);
   }

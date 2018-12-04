@@ -93,6 +93,7 @@ public class ContactsActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), EncryptActivity.class);
                         intent.putExtra("receiverId", model.getUid());
                         startActivity(intent);
+                        finish();
                     }
                 });
             }

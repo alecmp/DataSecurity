@@ -28,17 +28,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
-import alessandro.datasecurity.MainActivity;
+import alessandro.datasecurity.R;
 import alessandro.datasecurity.activities.stego.StegoActivity;
 import alessandro.datasecurity.utils.Constants;
 import alessandro.datasecurity.utils.StandardMethods;
-import alessandro.datasecurity.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
@@ -305,6 +303,7 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
     intent.putExtra("receiverId", receiverId);
     intent.putExtra(Constants.EXTRA_STEGO_IMAGE_PATH, filePath);
     startActivity(intent);
+    finish();
   }
 
   @Override
