@@ -6,6 +6,11 @@ import android.graphics.Bitmap;
 import java.io.File;
 
 interface EncryptView {
+  /**
+   *
+   * @return String secretMessage which is stored inside the editTextView
+   */
+  String getSecretSubject();
 
   /**
    *

@@ -46,6 +46,8 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
 
   @BindView(R.id.etSecretMessage)
   EditText etSecretMessage;
+  @BindView(R.id.etSecretSubject)
+  EditText etSecretSubject;
   @BindView(R.id.ivCoverImage)
   ImageView ivCoverImage;
   @BindView(R.id.ivSecretImage)
@@ -130,7 +132,7 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
     builder.show();
   }
 
-  @OnClick(R.id.bEncrypt)
+ /* @OnClick(R.id.bEncrypt)
   public void onButtonClick() {
     if (secretMessageType == Constants.TYPE_IMAGE) {
       mPresenter.encryptImage();
@@ -143,7 +145,7 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
         showToast(R.string.secret_text_empty);
       }
     }
-  }
+  }*/
 
   private ProgressDialog progressDialog;
   private EncryptPresenter mPresenter;
@@ -343,6 +345,11 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
       .into(ivSecretImage);
     stopProgressDialog();
     whichImage = -1;
+  }
+
+  @Override
+  public String getSecretSubject() {
+    return etSecretSubject.getText().toString().trim();
   }
 
   @Override
