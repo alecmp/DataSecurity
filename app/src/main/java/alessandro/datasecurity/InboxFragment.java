@@ -96,6 +96,7 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
 
         ButterKnife.bind(getActivity());
 
+
         if (mRecyclerView != null) {
             mRecyclerView.setHasFixedSize(true);
         }
@@ -118,6 +119,7 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                messages.clear();
                 //Your Logic here
                 for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                     MessageModel mModel = eventSnapshot.getValue(MessageModel.class);
@@ -131,7 +133,7 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                mAdapter.notifyDataSetChanged();
             }
         });
 
