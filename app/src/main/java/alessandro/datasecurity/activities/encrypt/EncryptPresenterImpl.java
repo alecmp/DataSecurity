@@ -174,7 +174,7 @@ class EncryptPresenterImpl implements EncryptPresenter, EncryptInteractorImpl.En
   }
 
   @Override
-  public void encryptText() {
+  public void encryptText(String key) {
 
     SharedPreferences sp = mView.getSharedPrefs();
     boolean isCoverSet = sp.getBoolean(Constants.PREF_COVER_IS_SET, false);
@@ -196,7 +196,7 @@ class EncryptPresenterImpl implements EncryptPresenter, EncryptInteractorImpl.En
     }
 
     mView.showProgressDialog();
-    mInteractor.performSteganography(mView.getSecretMessage(), coverImage, null);
+    mInteractor.performSteganography(mView.getSecretMessage(), coverImage, null, key);
   }
 
   @Override
@@ -229,7 +229,7 @@ class EncryptPresenterImpl implements EncryptPresenter, EncryptInteractorImpl.En
     }
 
     mView.showProgressDialog();
-    mInteractor.performSteganography(null, coverImage, secretImage);
+    mInteractor.performSteganography(null, coverImage, secretImage,null);
   }
 
   @Override

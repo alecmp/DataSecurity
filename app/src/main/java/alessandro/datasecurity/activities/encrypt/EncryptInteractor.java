@@ -13,5 +13,5 @@ interface EncryptInteractor {
    *
    * The method is using listeners to interact with result actions
    */
-  void performSteganography(String message, Bitmap coverImage, Bitmap secretImage);
+  void performSteganography(String message, Bitmap coverImage, Bitmap secretImage, String key);
 }

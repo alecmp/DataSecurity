@@ -20,7 +20,7 @@ interface EncryptPresenter {
   /**
    * Encrypts text and uses listeners to perform actions
    */
-  void encryptText();
+  void encryptText(String key);
 
   /**
    * Encrypts image and uses listeners to perform actions

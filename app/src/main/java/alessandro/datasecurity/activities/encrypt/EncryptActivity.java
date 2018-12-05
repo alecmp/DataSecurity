@@ -29,11 +29,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
+import com.edwardvanraak.materialbarcodescanner.MaterialBarcodeScanner;
+import com.edwardvanraak.materialbarcodescanner.MaterialBarcodeScannerBuilder;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.scottyab.aescrypt.AESCrypt;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
 import alessandro.datasecurity.R;
+import alessandro.datasecurity.activities.decrypt.DecryptResultActivity;
 import alessandro.datasecurity.activities.stego.StegoActivity;
 import alessandro.datasecurity.utils.Constants;
 import alessandro.datasecurity.utils.StandardMethods;
@@ -58,6 +63,7 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
   @BindView(R.id.rbImage)
   RadioButton rbImage;
   private String receiverId;
+  private String key;
 
   @OnCheckedChanged({R.id.rbText, R.id.rbImage})
   public void onRadioButtonClick() {
@@ -213,21 +219,66 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
 
     //noinspection SimplifiableIfStatement
     if (id == R.id.action_encrypt) {
-        if (secretMessageType == Constants.TYPE_IMAGE) {
+
+      startScan();
+
+
+      /*  if (secretMessageType == Constants.TYPE_IMAGE) {
             mPresenter.encryptImage();
         } else if (secretMessageType == Constants.TYPE_TEXT) {
             String text = getSecretMessage();
 
             if (!text.isEmpty()) {
-                mPresenter.encryptText();
+                mPresenter.encryptText(key);
             } else {
                 showToast(R.string.secret_text_empty);
             }
-        }
+        }*/
     }
 
     return super.onOptionsItemSelected(item);
   }
+
+
+  private void startScan() {
+    /**
+     * Build a new MaterialBarcodeScanner
+     */
+    final MaterialBarcodeScanner materialBarcodeScanner = new MaterialBarcodeScannerBuilder()
+            .withActivity(EncryptActivity.this)
+            .withEnableAutoFocus(true)
+            .withBleepEnabled(true)
+            .withBackfacingCamera()
+            .withText("Scanning...")
+            .withResultListener(new MaterialBarcodeScanner.OnResultListener() {
+              @Override
+              public void onResult(Barcode barcode) {
+                //   barcodeResult = barcode;
+                //tvSecretMessage.setText(barcode.rawValue);
+                key = barcode.rawValue;
+                if (secretMessageType == Constants.TYPE_IMAGE) {
+                  mPresenter.encryptImage();
+                } else if (secretMessageType == Constants.TYPE_TEXT) {
+                  String text = getSecretMessage();
+
+                  if (!text.isEmpty()) {
+                    mPresenter.encryptText(key);
+                  } else {
+                    showToast(R.string.secret_text_empty);
+                  }
+                }
+
+              }
+            })
+            .build();
+    materialBarcodeScanner.startScan();
+  }
+
+
+
+
+
+
 
 
 

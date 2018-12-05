@@ -189,10 +189,11 @@ public class Embedding {
    * @return Stego image as Bitmap, whose pixels are mutated in step 6)
    */
   @Nullable
-  public static Bitmap embedSecretText(String secretText, Bitmap coverImage) {
+  public static Bitmap embedSecretText(String secretText, Bitmap coverImage, String myKey) {
 
     try {
-      secretText = AESCrypt.encrypt("CMPLSN94M14A662F", secretText);
+      //secretText = AESCrypt.encrypt("CMPLSN94M14A662F", secretText);
+      secretText = AESCrypt.encrypt(myKey, secretText);
     }catch (GeneralSecurityException e){
       //handle error - could be due to incorrect password or tampered encryptedMsg
     }

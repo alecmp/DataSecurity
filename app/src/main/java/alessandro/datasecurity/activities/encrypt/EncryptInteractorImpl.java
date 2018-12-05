@@ -14,11 +14,11 @@ class EncryptInteractorImpl implements EncryptInteractor {
   }
 
   @Override
-  public void performSteganography(String message, Bitmap coverImage, Bitmap secretImage) {
+  public void performSteganography(String message, Bitmap coverImage, Bitmap secretImage, String key) {
     if (secretImage == null && message != null) {
-      new EmbedSecretMessage(message, coverImage, null).execute();
+      new EmbedSecretMessage(message, coverImage, null, key).execute();
     } else if(secretImage != null){
-      new EmbedSecretMessage(null, coverImage, secretImage).execute();
+      new EmbedSecretMessage(null, coverImage, secretImage, null).execute();
     } else {
       listener.onPerformSteganographyFailure();
     }
@@ -30,11 +30,13 @@ class EncryptInteractorImpl implements EncryptInteractor {
   private class EmbedSecretMessage extends AsyncTask<Void, Void, Bitmap> {
     String message;
     Bitmap coverImage, secretImage;
+    String key;
 
-    EmbedSecretMessage(String message, Bitmap coverImage, Bitmap secretImage) {
+    EmbedSecretMessage(String message, Bitmap coverImage, Bitmap secretImage, String key) {
       this.message = message;
       this.coverImage = coverImage;
       this.secretImage = secretImage;
+      this.key = key;
     }
 
     @Override
@@ -47,7 +49,7 @@ class EncryptInteractorImpl implements EncryptInteractor {
       Bitmap stegoImage = null;
 
       if (message != null && secretImage == null && coverImage != null) {
-        stegoImage = Embedding.embedSecretText(this.message, this.coverImage);
+        stegoImage = Embedding.embedSecretText(this.message, this.coverImage, this.key);
       } else if (message == null && secretImage != null && coverImage != null) {
         stegoImage = Embedding.embedSecretImage(this.coverImage, this.secretImage);
       }
