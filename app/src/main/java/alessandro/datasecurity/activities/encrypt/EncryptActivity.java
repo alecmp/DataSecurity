@@ -77,7 +77,7 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
 
     final CharSequence[] items = {
       getString(R.string.take_image_dialog),
-      getString(R.string.select_image_dialog)
+      getString(R.string.received_image_dialog)
     };
 
     AlertDialog.Builder builder = new AlertDialog.Builder(EncryptActivity.this);
@@ -100,7 +100,7 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
           } else {
             openCamera();
           }
-        } else if (items[item].equals(getString(R.string.select_image_dialog))) {
+        } else if (items[item].equals(getString(R.string.received_image_dialog))) {
 
           if (ContextCompat.checkSelfPermission(getApplicationContext(),
             Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -212,7 +212,7 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
     int id = item.getItemId();
 
     //noinspection SimplifiableIfStatement
-    if (id == R.id.action_send) {
+    if (id == R.id.action_encrypt) {
         if (secretMessageType == Constants.TYPE_IMAGE) {
             mPresenter.encryptImage();
         } else if (secretMessageType == Constants.TYPE_TEXT) {
@@ -303,6 +303,7 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
   public void startStegoActivity(String filePath) {
     Intent intent = new Intent(EncryptActivity.this, StegoActivity.class);
     intent.putExtra("receiverId", receiverId);
+    intent.putExtra("secretSubject", getSecretSubject());
     intent.putExtra(Constants.EXTRA_STEGO_IMAGE_PATH, filePath);
     startActivity(intent);
     finish();

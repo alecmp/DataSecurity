@@ -1,9 +1,9 @@
 package alessandro.datasecurity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -11,15 +11,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 import alessandro.datasecurity.auth.Login;
+import alessandro.datasecurity.utils.GlideApp;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,14 +35,11 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
     public static android.support.v4.app.FragmentManager sFm;
-    private SharedPreferences pref;
-    private static final String SHARED_PREFERENCES_TYPE = "Account";
     FirebaseUser user;
-    //dichiarazioni Firebase
-    static FirebaseDatabase database;
     private String userId;
-    private Uri photoUrl;
+    FirebaseStorage storage;
 
+    String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,35 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        // View header = navigationView.getHeaderView(0);
+        View header = navigationView.getHeaderView(0);
+        final ImageView profile = header.findViewById(R.id.user_profile_photo);
+        final TextView email = header.findViewById(R.id.nav_email);
+
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user.getUid() != null) {
+            userId = user.getUid();
+        }
+        email.setText(user.getEmail());
+        storage = FirebaseStorage.getInstance();
+        Log.d("userIdz ", userId);
+        storage.getReference().child("pictures/"+userId+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png' in uri
+                GlideApp.with(getApplicationContext())
+                        .load(uri.toString())
+                        .into(profile);
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+
 
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
@@ -55,31 +86,25 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onDrawerOpened(View drawerView) {
 
-/*
-
-                photoUrl = Uri.parse("https://firebasestorage.googleapis.com/v0/b/dibapp-b8fda.appspot.com/o/profile_icon.png?alt=media&token=cf3742c4-acb6-4c2d-b2ae-a516569aa082");
-                if (user != null && user.getPhotoUrl() != null) {
-                    photoUrl = user.getPhotoUrl();
-                }
-
-                pref = getSharedPreferences(SHARED_PREFERENCES_TYPE, MODE_PRIVATE);
-                String localStr = pref.getString(userId, null);
-                if (localStr != null) {
-                    Uri localUrl = Uri.parse(localStr);
-                    if (localUrl != photoUrl) {
-                        photoUrl = localUrl;
+               /* storage = FirebaseStorage.getInstance();
+                Log.d("userIdz ", userId);
+                storage.getReference().child("pictures/"+userId+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // Got the download URL for 'users/me/profile.png' in uri
+                        GlideApp.with(getApplicationContext())
+                                .load(uri.toString())
+                                .into(profile);
 
 
                     }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });*/
 
-                }
-
-                Glide.with(getApplicationContext())
-                        .load(photoUrl)
-                        //.skipMemoryCache(true)
-                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                        .into(profile);
-*/
 
             }
 

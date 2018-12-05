@@ -14,6 +14,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -62,14 +64,14 @@ public class DecryptActivity extends AppCompatActivity implements DecryptView {
 
   }*/
 
-  @OnClick(R.id.bDecrypt)
+  /*@OnClick(R.id.bDecrypt)
   public void onButtonClick() {
     if (isSISelected) {
       mPresenter.decryptMessage();
     } else {
       showToast(R.string.stego_image_not_selected);
     }
-  }
+  }*/
 
   private ProgressDialog progressDialog;
   private DecryptPresenter mPresenter;
@@ -243,4 +245,31 @@ public class DecryptActivity extends AppCompatActivity implements DecryptView {
       progressDialog.dismiss();
     }
   }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    // Inflate the menu; this adds items to the action bar if it is present.
+    getMenuInflater().inflate(R.menu.decryption_menu, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    // Handle action bar item clicks here. The action bar will
+    // automatically handle clicks on the Home/Up button, so long
+    // as you specify a parent activity in AndroidManifest.xml.
+    int id = item.getItemId();
+
+    //noinspection SimplifiableIfStatement
+    if (id == R.id.action_decrypt) {
+      if (isSISelected) {
+        mPresenter.decryptMessage();
+      } else {
+        showToast(R.string.stego_image_not_selected);
+      }
+    }
+
+    return super.onOptionsItemSelected(item);
+  }
+
 }

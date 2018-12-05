@@ -62,7 +62,7 @@
                     android:layout_gravity="center"
                     android:paddingBottom="10dp"
                     android:contentDescription="@string/select_image_title"
-                    app:srcCompat="@drawable/ic_add_image" />
+                    app:srcCompat="@drawable/no_img_placeholder" />
 
                 <!--<TextView
                     android:layout_width="wrap_content"
@@ -156,7 +156,7 @@
                     android:layout_height="@dimen/large_image_square"
                     android:layout_gravity="center"
                     android:visibility="gone"
-                    app:srcCompat="@mipmap/ic_launcher" />
+                    app:srcCompat="@drawable/no_img_placeholder" />
 
                 <!--<android.support.v7.widget.AppCompatButton
                     android:text="@string/b_secret_text_encrypt"

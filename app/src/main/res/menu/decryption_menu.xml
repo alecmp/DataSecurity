@@ -5,10 +5,10 @@
     tools:context=".activities.encrypt.EncryptActivity">
 
     <item
-        android:id="@+id/action_encrypt"
+        android:id="@+id/action_decrypt"
         android:orderInCategory="300"
-        android:title="Encrypt"
-        android:icon="@drawable/ic_encrypt"
+        android:title="Decrypt"
+        android:icon="@drawable/ic_decrypt"
         app:showAsAction="always"/>
 
 </menu>

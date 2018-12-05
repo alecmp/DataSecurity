@@ -68,11 +68,11 @@ public class Utils {
     public static String getUser(){
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user.getUid() != null) {
+      /*  if (user.getUid() != null) {
             userId = user.getUid();
-        }
+        }*/
 
-        return userId;
+        return user.getDisplayName();
     }
 
 

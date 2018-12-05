@@ -145,6 +145,7 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
      * chooses a random color from array.xml
      */
     private int getRandomMaterialColor(String typeColor) {
+
         int returnColor = Color.GRAY;
         int arrayId = getResources().getIdentifier("mdcolor_" + typeColor, "array", getActivity().getPackageName());
 
@@ -224,7 +225,7 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
             intent.putExtra("path", message.getPath());
             intent.putExtra("from", message.getFrom());
             startActivity(intent);
-            getActivity().finish();
+
 
         }
     }

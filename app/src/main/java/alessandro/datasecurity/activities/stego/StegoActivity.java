@@ -67,6 +67,7 @@ public class StegoActivity extends AppCompatActivity implements StegoView {
   private StegoPresenter mPresenter;
 
   private String stegoImagePath = "";
+  private String secretSubject;
   private boolean isSaved = false;
 
   @Override
@@ -84,6 +85,7 @@ public class StegoActivity extends AppCompatActivity implements StegoView {
       Bundle bundle = intent.getExtras();
       receiverId = bundle.getString("receiverId");
       stegoImagePath = bundle.getString(Constants.EXTRA_STEGO_IMAGE_PATH);
+      secretSubject = bundle.getString("secretSubject");
 
         Log.d("sgheps " , stegoImagePath);
 
@@ -125,8 +127,6 @@ public class StegoActivity extends AppCompatActivity implements StegoView {
 
     //noinspection SimplifiableIfStatement
     if (id == R.id.action_send) {
-
-
 
       shareStegoImage(stegoImagePath);
          if(!isSaved) {
@@ -206,7 +206,7 @@ public class StegoActivity extends AppCompatActivity implements StegoView {
             .child(receiverId)
             .getRef();
 
-    MessageModel mNewMessage = new MessageModel(Utils.getUser(), "info top secret", null, null, stegoImagePath);
+    MessageModel mNewMessage = new MessageModel(Utils.getUser(), secretSubject, null, null, stegoImagePath);
     ref.push().setValue(mNewMessage);
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef= storage.getReference();
