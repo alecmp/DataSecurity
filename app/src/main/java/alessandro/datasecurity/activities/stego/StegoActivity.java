@@ -46,7 +46,7 @@ public class StegoActivity extends AppCompatActivity implements StegoView {
   ImageView ivStegoImage;
   private String receiverId;
 
-  @OnClick({R.id.bStegoSave, R.id.bStegoShare})
+  /*@OnClick({R.id.bStegoSave, R.id.bStegoShare})
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.bStegoSave:
@@ -60,7 +60,7 @@ public class StegoActivity extends AppCompatActivity implements StegoView {
         shareStegoImage(stegoImagePath);
         break;
     }
-  }
+  }*/
 
 
   private ProgressDialog progressDialog;

@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"></android.support.v7.widget.Toolbar>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
             android:paddingBottom="5dp"
             android:adjustViewBounds="false" />
 
-        <android.support.v7.widget.AppCompatButton
+        <!--<android.support.v7.widget.AppCompatButton
             android:text="@string/b_stego_image_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
             android:layout_gravity="center"
             android:textColor="@color/colorPrimaryWhite"
             app:backgroundTint="@color/colorBlueGreySecondary"
-            android:id="@+id/bStegoShare" />
+            android:id="@+id/bStegoShare" />-->
     </LinearLayout>
 
 </LinearLayout>
