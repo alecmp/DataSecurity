@@ -13,6 +13,7 @@ import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -124,6 +125,7 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
                 for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                     MessageModel mModel = eventSnapshot.getValue(MessageModel.class);
                     mModel.setColor(getRandomMaterialColor("400"));
+                    Log.d("sheps ", Integer.toString(mModel.getColor()));
                     messages.add(mModel);
 
                 }

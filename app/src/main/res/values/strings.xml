@@ -1,18 +1,15 @@
 <resources>
 
     <!--View Titles-->
-    <string name="app_name">StegoPoliba</string>
+    <string name="app_name">Data Security</string>
     <string name="select_image_title">Cover Image</string>
     <string name="stego_image_title">Result Image</string>
     <string name="decrypt_result_title">Secret Message</string>
     <string name="secret_message_title">Secret Message Type</string>
     <string name="rb_secret_text">Text</string>
     <string name="rb_secret_image">Image</string>
-    <string name="b_secret_text_encrypt">Encrypt</string>
-    <string name="b_secret_text_decrypt">Decrypt</string>
     <string name="b_stego_image_share">Share</string>
     <string name="b_stego_image_save">Save</string>
-    <string name="et_secret_text">Message&#8230;</string>
     <string name="take_image_dialog">Take Photo</string>
     <string name="received_image_dialog">Received Image</string>
     <string name="cancel">Cancel</string>
@@ -30,11 +27,10 @@
     <string name="fullname">Full name</string>
     <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
     <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
-    <string name="title_activity_login">Sign in</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="btn_login">LOGIN</string>
-    <string name="btn_link_to_register">Not a member? Get registered in Easy Garbage Collection now!</string>
+    <string name="btn_link_to_register">Not a member? Get registered in Data Security now!</string>
     <string name="btn_link_to_login">Already registered. Login Me!</string>
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
     <string name="btn_forgot_password">Forgot your password?</string>
@@ -45,13 +41,11 @@
 
     <!--Messages-->
     <string name="encrypted_success">Message is successfully encrypted !</string>
-    <string name="encrypted_fail">Failure during message encryption</string>
     <string name="decrypt_success">Message is successfully decrypted</string>
     <string name="decrypt_fail">Failure during message decryption1</string>
     <string name="decrypt_fail2">Failure during message decryption2</string>
     <string name="compress_error">Failure during image compression</string>
     <string name="save_image_success">Stego Image was successfully saved !</string>
-    <string name="save_image_error">Failure during image saving</string>
     <string name="cover_image_empty">Please, select cover image</string>
     <string name="image_is_saved">Stego Image is already saved on device</string>
     <string name="secret_image_empty">Please, select secret image</string>
@@ -62,11 +56,9 @@
     <string name="secret_text_empty">Text field is empty !</string>
 
     <!--nboFrag-->
-    <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
     <string name="action_delete">Delete</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_contacts">ContactsActivity</string>
 </resources>

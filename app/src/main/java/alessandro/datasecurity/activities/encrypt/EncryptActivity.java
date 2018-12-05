@@ -371,7 +371,7 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
     Picasso.with(this)
       .load(file)
       .fit()
-      .placeholder(R.mipmap.ic_launcher)
+      .placeholder(R.drawable.no_img_placeholder)
       .into(ivCoverImage);
     stopProgressDialog();
     whichImage = -1;
@@ -393,7 +393,7 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
     Picasso.with(this)
       .load(file)
       .fit()
-      .placeholder(R.mipmap.ic_launcher)
+      .placeholder(R.drawable.no_img_placeholder)
       .into(ivSecretImage);
     stopProgressDialog();
     whichImage = -1;

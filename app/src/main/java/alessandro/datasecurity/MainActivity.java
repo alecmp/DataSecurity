@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity
         sFm = getSupportFragmentManager();
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+       /* if (id == R.id.nav_camera) {
 
             toolbar.getMenu().clear();
             toolbar.inflateMenu(R.menu.menu_main);
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity
             toolbar.inflateMenu(R.menu.menu_main);
             getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new InboxFragment()).commit();
 
-        } else if (id == R.id.logout) {
+        } else */if (id == R.id.logout) {
 
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(this, Login.class);

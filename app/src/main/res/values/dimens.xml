@@ -9,7 +9,6 @@
     <dimen name="big_text_dim">30sp</dimen>
 
     <!--Image dimensions-->
-    <dimen name="medium_image_square">150dp</dimen>
     <dimen name="large_image_square">200dp</dimen>
     <dimen name="stego_image_square">200dp</dimen>
 
@@ -24,7 +23,6 @@
 
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="padding_list_row">16dp</dimen>
-    <dimen name="messages_padding_left">72dp</dimen>
     <dimen name="icon_width_height">40dp</dimen>
     <dimen name="msg_text_primary">16sp</dimen>
     <dimen name="msg_text_secondary">14sp</dimen>
