@@ -130,7 +130,11 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
                     mModel.setColor(getRandomMaterialColor("400"));
                     if (mModel.isRead()) {
                         //Log.d("sharedpreff",sharedpreferences.getString(Long.toString(mModel.getId()), "Oggetto Criptato") );
-                        mModel.setSubject(sharedpreferences.getString(Long.toString(mModel.getId()), "Oggetto Criptato"));
+                        mModel.setSubject(sharedpreferences.getString(Long.toString(mModel.getId())+"S", "Oggetto decriptato"));
+                        mModel.setMessage(sharedpreferences.getString(Long.toString(mModel.getId())+"M", "Messaggio decriptato"));
+                    }else{
+                        mModel.setSubject("Oggetto criptato");
+                        mModel.setMessage("Messaggio criptato");
                     }
 
                     messages.add(mModel);
@@ -157,7 +161,6 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
 
         int returnColor = Color.GRAY;
         int arrayId = getResources().getIdentifier("mdcolor_" + typeColor, "array", getActivity().getPackageName());
-
         if (arrayId != 0) {
             TypedArray colors = getResources().obtainTypedArray(arrayId);
             int index = (int) (Math.random() * colors.length());

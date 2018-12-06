@@ -116,10 +116,10 @@ public class DecryptResultActivity extends AppCompatActivity {
                         tvSecretMessage.setText(decryptAES(barcode.rawValue, secretMessage));
                         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(id, decryptAES(barcode.rawValue, secretSubject));
+                        editor.putString(id+"S", decryptAES(barcode.rawValue, secretSubject));
+                        editor.putString(id+"M", tvSecretMessage.getText().toString());
                         editor.commit();
 
-                        Log.d("sharedpreff",id );
 
 
 
