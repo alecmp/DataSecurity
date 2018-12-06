@@ -1,6 +1,8 @@
 package alessandro.datasecurity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -53,6 +55,8 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
     private RecyclerView mRecyclerView;
     private ActionModeCallback actionModeCallback;
     private ActionMode actionMode;
+    private SharedPreferences sharedpreferences;
+    public static final String MyPREFERENCES = "MyPrefs" ;
 
     Query query;
 
@@ -88,12 +92,12 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
             }
         });
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        query = FirebaseDatabase.getInstance()
+      /*  query = FirebaseDatabase.getInstance()
                 .getReference()
                 .child("users")
                 .child(userId)
                 .child("messages ")
-                .getRef();
+                .getRef();*/
 
         ButterKnife.bind(getActivity());
 
@@ -110,7 +114,7 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
         mRecyclerView.setAdapter(mAdapter);
         actionModeCallback = new ActionModeCallback();
 
-
+        sharedpreferences = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference()
                 .child("messages")
@@ -124,6 +128,14 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
                 for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                     MessageModel mModel = eventSnapshot.getValue(MessageModel.class);
                     mModel.setColor(getRandomMaterialColor("400"));
+                    ////////////////////////////////////////////////////////////////////////////
+                    if (mModel.isRead()) {
+                        mModel.setSubject(sharedpreferences.getString("nameKey", "Oggetto Criptato"));
+                    }
+
+
+
+                    ////////////////////////////////////////////////////////////////////////////
                     messages.add(mModel);
 
                 }
@@ -197,8 +209,10 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
         // mark the message as important
         MessageModel message = messages.get(position);
         message.setImportant(!message.isImportant());
+        message.setMessage("aaa");
         messages.set(position, message);
         mAdapter.notifyDataSetChanged();
+
     }
 
 
@@ -218,7 +232,7 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        
+
         // verify whether action mode is enabled or not
         // if enabled, change the row state to activated
         if (mAdapter.getSelectedItemCount() > 0) {

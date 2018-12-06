@@ -108,6 +108,7 @@ public class DecryptResultActivity extends AppCompatActivity {
                         //tvSecretMessage.setText(barcode.rawValue);
                         tvSecretMessage.setText(decryptAES(barcode.rawValue));
 
+
                     }
                 })
                 .build();
