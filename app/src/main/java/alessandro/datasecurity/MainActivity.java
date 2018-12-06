@@ -1,9 +1,9 @@
 package alessandro.datasecurity;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -18,8 +18,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -52,32 +50,26 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
         final ImageView profile = header.findViewById(R.id.user_profile_photo);
+        final TextView iconText = header.findViewById(R.id.icon_text);
+        ;
+        final TextView fullname = header.findViewById(R.id.nav_fullname);
         final TextView email = header.findViewById(R.id.nav_email);
 
-
         user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user.getUid() != null) {
-            userId = user.getUid();
-        }
+        if (user.getDisplayName() != null) iconText.setText(user.getDisplayName().substring(0, 1));
+        fullname.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         email.setText(user.getEmail());
-        storage = FirebaseStorage.getInstance();
-        Log.d("userIdz ", userId);
-        storage.getReference().child("pictures/"+userId+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png' in uri
-                GlideApp.with(getApplicationContext())
-                        .load(uri.toString())
-                        .into(profile);
-
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
+        if (user.getPhotoUrl() != null) {
+            GlideApp.with(getApplicationContext())
+                    .load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString())
+                    .into(profile);
+            profile.setColorFilter(null);
+            iconText.setVisibility(View.GONE);
+        } else {
+            profile.setImageResource(R.drawable.bg_circle);
+            profile.setColorFilter((getRandomMaterialColor("400")));
+            iconText.setVisibility(View.VISIBLE);
+        }
 
 
         toggle = new ActionBarDrawerToggle(
@@ -85,26 +77,9 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onDrawerOpened(View drawerView) {
-
-               /* storage = FirebaseStorage.getInstance();
-                Log.d("userIdz ", userId);
-                storage.getReference().child("pictures/"+userId+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        // Got the download URL for 'users/me/profile.png' in uri
-                        GlideApp.with(getApplicationContext())
-                                .load(uri.toString())
-                                .into(profile);
-
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle any errors
-                    }
-                });*/
-
+                if (user.getPhotoUrl() == null) {
+                    profile.setColorFilter((getRandomMaterialColor("400")));
+                }
 
             }
 
@@ -122,6 +97,8 @@ public class MainActivity extends AppCompatActivity
             FragmentManager fm = getSupportFragmentManager();
             fm.beginTransaction().replace(R.id.content_frame, new InboxFragment()).commit();
         }
+
+
     }
 
 
@@ -184,7 +161,8 @@ public class MainActivity extends AppCompatActivity
             toolbar.inflateMenu(R.menu.menu_main);
             getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new InboxFragment()).commit();
 
-        } else */if (id == R.id.logout) {
+        } else */
+        if (id == R.id.logout) {
 
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(this, Login.class);
@@ -203,4 +181,17 @@ public class MainActivity extends AppCompatActivity
    /* public void onListFragmentInteraction(DummyContent.DummyItem uri) {
         //you can leave it empty
     }*/
+
+    private int getRandomMaterialColor(String typeColor) {
+        int returnColor = Color.GRAY;
+        int arrayId = getResources().getIdentifier("mdcolor_" + typeColor, "array", getPackageName());
+
+        if (arrayId != 0) {
+            TypedArray colors = getResources().obtainTypedArray(arrayId);
+            int index = (int) (Math.random() * colors.length());
+            returnColor = colors.getColor(index, Color.GRAY);
+            colors.recycle();
+        }
+        return returnColor;
+    }
 }

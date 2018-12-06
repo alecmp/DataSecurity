@@ -1,5 +1,7 @@
 package alessandro.datasecurity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import alessandro.datasecurity.utils.Utils;
 
 public class MessageModel {
@@ -27,6 +29,9 @@ public class MessageModel {
     }
 
     public MessageModel(String from, String subject, String message, String picture, String path) {
+
+
+
         this.id = Long.parseLong(Utils.getIdCurrentTimestamp());;
         this.from = from;
         this.subject = subject;

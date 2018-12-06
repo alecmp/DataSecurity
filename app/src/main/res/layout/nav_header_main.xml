@@ -11,18 +11,26 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-
+    <RelativeLayout
+        android:id="@+id/icon_front"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_profile_photo"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_below="@drawable/nav_drawer_bg"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/fui_ic_github_white_24dp"
-        android:elevation="5dp"
         android:scaleType="centerCrop"
         android:src="@drawable/fui_ic_github_white_24dp" />
-
+        <TextView
+            android:id="@+id/icon_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/nav_icon_text" />
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"

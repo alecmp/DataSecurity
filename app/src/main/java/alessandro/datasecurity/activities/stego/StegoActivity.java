@@ -19,6 +19,7 @@ import android.widget.ImageView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -206,7 +207,7 @@ public class StegoActivity extends AppCompatActivity implements StegoView {
             .child(receiverId)
             .getRef();
 
-    MessageModel mNewMessage = new MessageModel(Utils.getUser(), secretSubject, null, null, stegoImagePath);
+    MessageModel mNewMessage = new MessageModel(Utils.getUser(), secretSubject, null, FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString(), stegoImagePath);
     ref.push().setValue(mNewMessage);
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef= storage.getReference();

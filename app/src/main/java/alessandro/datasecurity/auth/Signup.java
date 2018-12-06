@@ -1,6 +1,7 @@
 package alessandro.datasecurity.auth;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -112,7 +113,9 @@ public class Signup extends AppCompatActivity {
                                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                             .setDisplayName(fullname)
+                                            .setPhotoUri(Uri.parse("https://4.bp.blogspot.com/-hO4f0VwbBXM/V4USBgrQk7I/AAAAAAAACOE/-CqTJ1ONmFIh9szArjRNdQuWm1bLSTY3ACLcB/s1600/Tiana2.NEF"))
                                             .build();
+                                    //.setPhotoUri(Uri.parse("https://4.bp.blogspot.com/-hO4f0VwbBXM/V4USBgrQk7I/AAAAAAAACOE/-CqTJ1ONmFIh9szArjRNdQuWm1bLSTY3ACLcB/s1600/Tiana2.NEF"))
                                     if (user != null) {
                                         user.updateProfile(profileUpdates);
                                     }
@@ -125,20 +128,6 @@ public class Signup extends AppCompatActivity {
                                             .getRef();
                                     ref.setValue(new User(userId, fullname, email, null));
 
-                                    /////////////////add contacts////////////
-                                    /////////////////////////////////////
-                                    ///////add messages/////////////////////////
-                                    DatabaseReference ref3 = FirebaseDatabase.getInstance()
-                                            .getReference()
-                                            .child("messages")
-                                            .child(userId)
-                                            .getRef();
-                                  /*  MessageModel mNewMessage = new MessageModel(1, "Gino", "info top secret", "puzzi", "22 Nov 2018", null);
-                                    MessageModel mNewMessage2 = new MessageModel(1, "Gino", "info top secret", "puzzi", "22 Nov 2018", null);
-                                    MessageModel mNewMessage3 = new MessageModel(1, "Gino", "info top secret", "puzzi", "22 Nov 2018", null);
-                                    ref3.push().setValue(mNewMessage);
-                                    ref3.push().setValue(mNewMessage2);
-                                    ref3.push().setValue(mNewMessage3);*/
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                     Intent intent = new Intent(Signup.this, MainActivity.class);

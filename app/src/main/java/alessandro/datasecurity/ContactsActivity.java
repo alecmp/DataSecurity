@@ -71,7 +71,8 @@ public class ContactsActivity extends AppCompatActivity {
        Query query = FirebaseDatabase.getInstance()
                 .getReference()
                 .child("users")
-                .getRef();
+                .getRef()
+                .orderByChild("name");
 
         mPeopleRV.hasFixedSize();
         mPeopleRV.setLayoutManager(new LinearLayoutManager(this));
