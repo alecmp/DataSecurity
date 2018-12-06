@@ -333,10 +333,8 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
         List<Integer> selectedItemPositions =
                 mAdapter.getSelectedItems();
         for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
-            mAdapter.removeData(selectedItemPositions.get(i));
 
             MessageModel message = messages.get(i);
-
             Query queryRef = FirebaseDatabase.getInstance().getReference().child("messages").child(userId).orderByChild("id").equalTo(message.getId());
             queryRef.addChildEventListener(new ChildEventListener() {
                 @Override
@@ -364,6 +362,14 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
                     snapshot.getRef().setValue(null);
                 }
             });
+
+
+
+
+            mAdapter.removeData(selectedItemPositions.get(i));
+
+
+
 
 
         }
