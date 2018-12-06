@@ -36,9 +36,9 @@ import com.scottyab.aescrypt.AESCrypt;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.security.GeneralSecurityException;
 
 import alessandro.datasecurity.R;
-import alessandro.datasecurity.activities.decrypt.DecryptResultActivity;
 import alessandro.datasecurity.activities.stego.StegoActivity;
 import alessandro.datasecurity.utils.Constants;
 import alessandro.datasecurity.utils.StandardMethods;
@@ -354,7 +354,12 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
   public void startStegoActivity(String filePath) {
     Intent intent = new Intent(EncryptActivity.this, StegoActivity.class);
     intent.putExtra("receiverId", receiverId);
-    intent.putExtra("secretSubject", getSecretSubject());
+    //intent.putExtra("secretSubject", getSecretSubject());
+    try {
+      intent.putExtra("secretSubject", AESCrypt.encrypt(key, getSecretSubject()));
+    }catch (GeneralSecurityException e){
+      //handle error - could be due to incorrect password or tampered encryptedMsg
+    }
     intent.putExtra(Constants.EXTRA_STEGO_IMAGE_PATH, filePath);
     startActivity(intent);
     finish();

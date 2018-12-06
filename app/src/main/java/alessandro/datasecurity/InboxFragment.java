@@ -41,7 +41,7 @@ import alessandro.datasecurity.utils.DividerItemDecoration;
 import butterknife.ButterKnife;
 
 
-public class InboxFragment extends Fragment implements  MessagesAdapter.MessageAdapterListener {
+public class InboxFragment extends Fragment implements MessagesAdapter.MessageAdapterListener {
     public static List<MessageModel> messages = new ArrayList<>();
 
 
@@ -121,7 +121,6 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 messages.clear();
-                //Your Logic here
                 for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                     MessageModel mModel = eventSnapshot.getValue(MessageModel.class);
                     mModel.setColor(getRandomMaterialColor("400"));
@@ -183,7 +182,6 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
     }
 
 
-
     @Override
     public void onIconClicked(int position) {
         if (actionMode == null) {
@@ -204,11 +202,23 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
     }
 
 
-
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void onMessageRowClicked(int position) {
+        myRef = FirebaseDatabase.getInstance().getReference();
+        Query query = myRef.child("messages").child(userId).orderByChild("id").equalTo(messages.get(position).getId());
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    snapshot.getRef().child("read").setValue(true);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        
         // verify whether action mode is enabled or not
         // if enabled, change the row state to activated
         if (mAdapter.getSelectedItemCount() > 0) {
@@ -219,7 +229,7 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
             message.setRead(true);
             messages.set(position, message);
             mAdapter.notifyDataSetChanged();
-           // Toast.makeText(getContext(), "Read: " + message.getMessage(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getContext(), "Read: " + message.getMessage(), Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(getActivity(), DecryptActivity.class);
             intent.putExtra("message", message.getId());
@@ -285,6 +295,7 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
                     return false;
             }
         }
+
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             mAdapter.clearSelections();
@@ -338,8 +349,6 @@ public class InboxFragment extends Fragment implements  MessagesAdapter.MessageA
                     snapshot.getRef().setValue(null);
                 }
             });
-
-
 
 
         }
