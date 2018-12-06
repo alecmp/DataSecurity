@@ -41,10 +41,7 @@ public class DecryptActivity extends AppCompatActivity implements DecryptView {
   private String userId;
   FirebaseStorage storage;
   StorageReference storageRef;
-  String url;
-  String path;
-  String from;
-  String message;
+  String url, path, from, message, subject, id;
 //testing
   @BindView(R.id.ivStegoImage)
   ImageView ivStegoImage;
@@ -85,13 +82,13 @@ public class DecryptActivity extends AppCompatActivity implements DecryptView {
     ButterKnife.bind(this);
 
     Intent intent = getIntent();
-    String timeStamp = "20181129130629";
     if (intent != null) {
       Bundle bundle = intent.getExtras();
-      timeStamp = bundle.getString("message");
       path = bundle.getString("path");
       from = bundle.getString("from");
       message = bundle.getString("message");
+      subject = bundle.getString("subject");
+      id = bundle.getString("id");
     }
 
     progressDialog = new ProgressDialog(this);
@@ -192,6 +189,14 @@ public class DecryptActivity extends AppCompatActivity implements DecryptView {
 
     if (secretMessage != null) {
       intent.putExtra(Constants.EXTRA_SECRET_TEXT_RESULT, secretMessage);
+    }
+
+    if (subject != null) {
+      intent.putExtra("subject", subject);
+    }
+
+    if (id != null) {
+      intent.putExtra("id", id);
     }
 
     if (secretImagePath != null) {

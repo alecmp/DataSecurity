@@ -1,10 +1,13 @@
 package alessandro.datasecurity.activities.decrypt;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,8 +28,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DecryptResultActivity extends AppCompatActivity {
+import static alessandro.datasecurity.InboxFragment.MyPREFERENCES;
 
+public class DecryptResultActivity extends AppCompatActivity {
+    SharedPreferences sharedpreferences;
     @BindView(R.id.tvSecretMessage)
     TextView tvSecretMessage;
 
@@ -38,7 +43,7 @@ public class DecryptResultActivity extends AppCompatActivity {
 
 
     private String secretImagePath;
-    private String secretMessage;
+    private String secretMessage, secretSubject, id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,8 @@ public class DecryptResultActivity extends AppCompatActivity {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             secretMessage = bundle.getString(Constants.EXTRA_SECRET_TEXT_RESULT);
+            secretSubject =  bundle.getString("subject");
+            id =  bundle.getString("id");
             secretImagePath = bundle.getString(Constants.EXTRA_SECRET_IMAGE_RESULT);
         }
 
@@ -106,7 +113,14 @@ public class DecryptResultActivity extends AppCompatActivity {
                     public void onResult(Barcode barcode) {
                         //   barcodeResult = barcode;
                         //tvSecretMessage.setText(barcode.rawValue);
-                        tvSecretMessage.setText(decryptAES(barcode.rawValue));
+                        tvSecretMessage.setText(decryptAES(barcode.rawValue, secretMessage));
+                        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(id, decryptAES(barcode.rawValue, secretSubject));
+                        editor.commit();
+
+                        Log.d("sharedpreff",id );
+
 
 
                     }
@@ -116,14 +130,14 @@ public class DecryptResultActivity extends AppCompatActivity {
     }
 
 
-    private String decryptAES(String password) {
+    private String decryptAES(String password, String message) {
         String messageAfterDecrypt = null;
         try {
-            messageAfterDecrypt = AESCrypt.decrypt(password, secretMessage);
+            messageAfterDecrypt = AESCrypt.decrypt(password, message);
+
         } catch (GeneralSecurityException e) {
             //handle error - could be due to incorrect password or tampered encryptedMsg
         }
-
         return messageAfterDecrypt;
     }
 

@@ -207,7 +207,12 @@ public class StegoActivity extends AppCompatActivity implements StegoView {
             .child(receiverId)
             .getRef();
 
-    MessageModel mNewMessage = new MessageModel(Utils.getUser(), secretSubject, null, FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString(), stegoImagePath);
+    String photoUrl = null;
+    if (FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() != null) {
+      photoUrl = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString();
+    }
+
+    MessageModel mNewMessage = new MessageModel(Utils.getUser(), secretSubject, null, photoUrl, stegoImagePath);
     ref.push().setValue(mNewMessage);
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef= storage.getReference();

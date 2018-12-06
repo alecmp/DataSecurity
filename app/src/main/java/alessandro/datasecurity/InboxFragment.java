@@ -128,14 +128,11 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
                 for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                     MessageModel mModel = eventSnapshot.getValue(MessageModel.class);
                     mModel.setColor(getRandomMaterialColor("400"));
-                    ////////////////////////////////////////////////////////////////////////////
                     if (mModel.isRead()) {
-                        mModel.setSubject(sharedpreferences.getString("nameKey", "Oggetto Criptato"));
+                        //Log.d("sharedpreff",sharedpreferences.getString(Long.toString(mModel.getId()), "Oggetto Criptato") );
+                        mModel.setSubject(sharedpreferences.getString(Long.toString(mModel.getId()), "Oggetto Criptato"));
                     }
 
-
-
-                    ////////////////////////////////////////////////////////////////////////////
                     messages.add(mModel);
 
                 }
@@ -209,7 +206,6 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
         // mark the message as important
         MessageModel message = messages.get(position);
         message.setImportant(!message.isImportant());
-        message.setMessage("aaa");
         messages.set(position, message);
         mAdapter.notifyDataSetChanged();
 
@@ -247,8 +243,10 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
 
             Intent intent = new Intent(getActivity(), DecryptActivity.class);
             intent.putExtra("message", message.getId());
+            intent.putExtra("subject", message.getSubject());
             intent.putExtra("path", message.getPath());
             intent.putExtra("from", message.getFrom());
+            intent.putExtra("id", Long.toString(message.getId()));
             startActivity(intent);
 
 
