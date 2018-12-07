@@ -34,10 +34,7 @@ public class MainActivity extends AppCompatActivity
     ActionBarDrawerToggle toggle;
     public static android.support.v4.app.FragmentManager sFm;
     FirebaseUser user;
-    private String userId;
-    FirebaseStorage storage;
 
-    String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

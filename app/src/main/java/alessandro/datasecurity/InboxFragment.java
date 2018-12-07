@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import alessandro.datasecurity.activities.decrypt.DecryptActivity;
+import alessandro.datasecurity.activities.decrypt.DecryptResultActivity;
 import alessandro.datasecurity.utils.Constants;
 import alessandro.datasecurity.utils.Database;
 import alessandro.datasecurity.utils.DividerItemDecoration;
@@ -161,7 +162,10 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
     private int getRandomMaterialColor(String typeColor) {
 
         int returnColor = Color.GRAY;
-        int arrayId = getResources().getIdentifier("mdcolor_" + typeColor, "array", getActivity().getPackageName());
+        int arrayId = 0;
+        if(getActivity()!=null) {
+            arrayId = getResources().getIdentifier("mdcolor_" + typeColor, "array", getActivity().getPackageName());
+        }
         if (arrayId != 0) {
             TypedArray colors = getResources().obtainTypedArray(arrayId);
             int index = (int) (Math.random() * colors.length());
@@ -240,19 +244,32 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
         } else {
             // read the message which removes bold from the row
             MessageModel message = messages.get(position);
-            message.setRead(true);
-            messages.set(position, message);
-            mAdapter.notifyDataSetChanged();
-            // Toast.makeText(getContext(), "Read: " + message.getMessage(), Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(getActivity(), DecryptActivity.class);
-            intent.putExtra(Constants.EXTRA_SECRET_TEXT_RESULT, message.getId());
-            intent.putExtra(Constants.EXTRA_SECRET_SUBJECT_RESULT, message.getSubject());
-            intent.putExtra(Constants.EXTRA_STEGO_IMAGE_PATH, message.getPath());
-            intent.putExtra("from", message.getFrom());
-            intent.putExtra("id", Long.toString(message.getId()));
-            startActivity(intent);
+            if(!message.isRead()) {
+                message.setRead(true);
+                messages.set(position, message);
+                mAdapter.notifyDataSetChanged();
+                // Toast.makeText(getContext(), "Read: " + message.getMessage(), Toast.LENGTH_SHORT).show();
 
+                Intent intent = new Intent(getActivity(), DecryptActivity.class);
+                intent.putExtra(Constants.EXTRA_SECRET_TEXT_RESULT, message.getId());
+                intent.putExtra(Constants.EXTRA_SECRET_SUBJECT_RESULT, message.getSubject());
+                intent.putExtra(Constants.EXTRA_STEGO_IMAGE_PATH, message.getPath());
+                intent.putExtra(Constants.EXTRA_IS_RESULT, false);
+                intent.putExtra("from", message.getFrom());
+                intent.putExtra("id", Long.toString(message.getId()));
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(getActivity(), DecryptResultActivity.class);
+                intent.putExtra(Constants.EXTRA_SECRET_TEXT_RESULT, message.getMessage());
+                intent.putExtra(Constants.EXTRA_SECRET_SUBJECT_RESULT, message.getSubject());
+                intent.putExtra(Constants.EXTRA_STEGO_IMAGE_PATH, message.getPath());
+                intent.putExtra(Constants.EXTRA_IS_RESULT, true);
+                intent.putExtra("from", message.getFrom());
+                intent.putExtra("id", Long.toString(message.getId()));
+                startActivity(intent);
+
+            }
 
         }
     }

@@ -35,6 +35,7 @@ public class Constants {
   public static final String EXTRA_SECRET_TEXT_RESULT = "secret_text_result";
   public static final String EXTRA_SECRET_IMAGE_RESULT = "secret_image_result";
   public static final String EXTRA_SECRET_SUBJECT_RESULT = "secret_subject_result";
+  public static final String EXTRA_IS_RESULT = "is_result";
 
   //Colors for Stego Image. They are the most rare colors in nature
   public static final int COLOR_RGB_END = Color.rgb(96, 62, 148); //Saint's Row Purple

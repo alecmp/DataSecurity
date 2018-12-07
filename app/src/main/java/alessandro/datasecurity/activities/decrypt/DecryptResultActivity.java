@@ -47,6 +47,7 @@ public class DecryptResultActivity extends AppCompatActivity {
 
     private String secretImagePath;
     private String secretMessage, secretSubject, id;
+    private Boolean isResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,15 @@ public class DecryptResultActivity extends AppCompatActivity {
             secretSubject =  bundle.getString(Constants.EXTRA_SECRET_SUBJECT_RESULT);
             id =  bundle.getString("id");
             secretImagePath = bundle.getString(Constants.EXTRA_SECRET_IMAGE_RESULT);
+            isResult = bundle.getBoolean(Constants.EXTRA_IS_RESULT);
+        }
+
+        if (isResult){
+            bScanToDecode.setVisibility(View.GONE);
+        }
+
+        if (secretSubject != null) {
+            tvSecretSubject.setText(secretSubject);
         }
 
         if (secretMessage != null) {
