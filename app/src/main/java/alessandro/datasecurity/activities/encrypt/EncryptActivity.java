@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -28,6 +29,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.edwardvanraak.materialbarcodescanner.MaterialBarcodeScanner;
 import com.edwardvanraak.materialbarcodescanner.MaterialBarcodeScannerBuilder;
@@ -58,6 +60,9 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
   @BindView(R.id.ivSecretImage)
   ImageView ivSecretImage;
 
+  @BindView(R.id.etSecretMessageWrapper)
+  TextInputLayout etSecretMessageWrapper;
+
   @BindView(R.id.rbText)
   RadioButton rbText;
   @BindView(R.id.rbImage)
@@ -69,9 +74,11 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
   public void onRadioButtonClick() {
     if (rbImage.isChecked()) {
       etSecretMessage.setVisibility(View.GONE);
+      etSecretMessageWrapper.setVisibility(View.GONE);
       ivSecretImage.setVisibility(View.VISIBLE);
       secretMessageType = Constants.TYPE_IMAGE;
     } else if (rbText.isChecked()) {
+        etSecretMessageWrapper.setVisibility(View.VISIBLE);
       etSecretMessage.setVisibility(View.VISIBLE);
       ivSecretImage.setVisibility(View.GONE);
       secretMessageType = Constants.TYPE_TEXT;
