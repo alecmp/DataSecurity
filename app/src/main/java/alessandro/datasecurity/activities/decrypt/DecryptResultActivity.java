@@ -63,13 +63,13 @@ public class DecryptResultActivity extends AppCompatActivity {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             secretMessage = bundle.getString(Constants.EXTRA_SECRET_TEXT_RESULT);
-            secretSubject =  bundle.getString(Constants.EXTRA_SECRET_SUBJECT_RESULT);
-            id =  bundle.getString("id");
+            secretSubject = bundle.getString(Constants.EXTRA_SECRET_SUBJECT_RESULT);
+            id = bundle.getString("id");
             secretImagePath = bundle.getString(Constants.EXTRA_SECRET_IMAGE_RESULT);
             isResult = bundle.getBoolean(Constants.EXTRA_IS_RESULT);
         }
 
-        if (isResult){
+        if (isResult) {
             bScanToDecode.setVisibility(View.GONE);
         }
 
@@ -81,7 +81,7 @@ public class DecryptResultActivity extends AppCompatActivity {
             tvSecretMessage.setText(secretMessage);
         } else if (secretImagePath != null) {
             ivSecretImage.setVisibility(View.VISIBLE);
-           // setSecretImage(secretImagePath);
+            // setSecretImage(secretImagePath);
             ivSecretImage.setImageDrawable(getResources().getDrawable(R.drawable.no_img_placeholder));
         }
     }
@@ -125,24 +125,25 @@ public class DecryptResultActivity extends AppCompatActivity {
                 .withResultListener(new MaterialBarcodeScanner.OnResultListener() {
                     @Override
                     public void onResult(Barcode barcode) {
+                        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
                         //   barcodeResult = barcode;
                         //tvSecretMessage.setText(barcode.rawValue);
-                        if (secretImagePath!= null) {
-                            setSecretImage(secretImagePath);
+                        if (secretSubject != null) {
+                            setSecretImage(secretSubject);
+                            tvSecretSubject.setText(decryptAES(barcode.rawValue, secretSubject));
+                            editor.putString(id + "S", tvSecretSubject.getText().toString());
                         }
-                      if (secretMessage != null) {
-                          tvSecretMessage.setText(decryptAES(barcode.rawValue, secretMessage));
-
-                          tvSecretSubject.setText(decryptAES(barcode.rawValue, secretSubject));
-                          sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-                          SharedPreferences.Editor editor = sharedpreferences.edit();
-                          editor.putString(id + "S", tvSecretSubject.getText().toString());
-                          editor.putString(id + "M", tvSecretMessage.getText().toString());
-                          editor.commit();
-                      }
+                        if (secretMessage != null) {
+                            tvSecretMessage.setText(decryptAES(barcode.rawValue, secretMessage));
+                            editor.putString(id + "M", tvSecretMessage.getText().toString());
+                        }
+                        if (secretImagePath != null) {
+                            setSecretImage(secretImagePath);
+                            editor.putString(id + "M", "Immagine");
+                        }
+                        editor.commit();
                         bScanToDecode.setVisibility(View.GONE);
-
-
 
 
                     }
