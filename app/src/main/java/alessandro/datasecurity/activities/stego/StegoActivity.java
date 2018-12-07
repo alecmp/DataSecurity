@@ -86,9 +86,7 @@ public class StegoActivity extends AppCompatActivity implements StegoView {
       Bundle bundle = intent.getExtras();
       receiverId = bundle.getString("receiverId");
       stegoImagePath = bundle.getString(Constants.EXTRA_STEGO_IMAGE_PATH);
-      secretSubject = bundle.getString("secretSubject");
-
-        Log.d("sgheps " , stegoImagePath);
+      secretSubject = bundle.getString(Constants.EXTRA_SECRET_SUBJECT_RESULT);
 
     }
 

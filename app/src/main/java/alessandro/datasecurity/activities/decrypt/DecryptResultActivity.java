@@ -35,6 +35,9 @@ public class DecryptResultActivity extends AppCompatActivity {
     @BindView(R.id.tvSecretMessage)
     TextView tvSecretMessage;
 
+    @BindView(R.id.tvSecretSubject)
+    TextView tvSecretSubject;
+
     @BindView(R.id.ivSecretImage)
     ImageView ivSecretImage;
 
@@ -59,7 +62,7 @@ public class DecryptResultActivity extends AppCompatActivity {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             secretMessage = bundle.getString(Constants.EXTRA_SECRET_TEXT_RESULT);
-            secretSubject =  bundle.getString("subject");
+            secretSubject =  bundle.getString(Constants.EXTRA_SECRET_SUBJECT_RESULT);
             id =  bundle.getString("id");
             secretImagePath = bundle.getString(Constants.EXTRA_SECRET_IMAGE_RESULT);
         }
@@ -114,9 +117,10 @@ public class DecryptResultActivity extends AppCompatActivity {
                         //   barcodeResult = barcode;
                         //tvSecretMessage.setText(barcode.rawValue);
                         tvSecretMessage.setText(decryptAES(barcode.rawValue, secretMessage));
+                        tvSecretSubject.setText(decryptAES(barcode.rawValue, secretSubject));
                         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(id+"S", decryptAES(barcode.rawValue, secretSubject));
+                        editor.putString(id+"S", tvSecretSubject.getText().toString());
                         editor.putString(id+"M", tvSecretMessage.getText().toString());
                         editor.commit();
 

@@ -45,31 +45,6 @@ public class DecryptActivity extends AppCompatActivity implements DecryptView {
 //testing
   @BindView(R.id.ivStegoImage)
   ImageView ivStegoImage;
-
-  /*@OnClick(R.id.ivStegoImage)
-  public void onStegoImageClick() {
-    if (ContextCompat.checkSelfPermission(getApplicationContext(),
-      Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
-      ActivityCompat.requestPermissions(DecryptActivity.this,
-        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-        Constants.PERMISSIONS_EXTERNAL_STORAGE);
-
-    } else {
-      chooseImage();
-    }
-
-  }*/
-
-  /*@OnClick(R.id.bDecrypt)
-  public void onButtonClick() {
-    if (isSISelected) {
-      mPresenter.decryptMessage();
-    } else {
-      showToast(R.string.stego_image_not_selected);
-    }
-  }*/
-
   private ProgressDialog progressDialog;
   private DecryptPresenter mPresenter;
   private boolean isSISelected = false;
@@ -84,10 +59,10 @@ public class DecryptActivity extends AppCompatActivity implements DecryptView {
     Intent intent = getIntent();
     if (intent != null) {
       Bundle bundle = intent.getExtras();
-      path = bundle.getString("path");
+      path = bundle.getString(Constants.EXTRA_STEGO_IMAGE_PATH);
       from = bundle.getString("from");
-      message = bundle.getString("message");
-      subject = bundle.getString("subject");
+      message = bundle.getString(Constants.EXTRA_SECRET_TEXT_RESULT);
+      subject = bundle.getString(Constants.EXTRA_SECRET_SUBJECT_RESULT);
       id = bundle.getString("id");
     }
 
@@ -192,7 +167,7 @@ public class DecryptActivity extends AppCompatActivity implements DecryptView {
     }
 
     if (subject != null) {
-      intent.putExtra("subject", subject);
+      intent.putExtra(Constants.EXTRA_SECRET_SUBJECT_RESULT, subject);
     }
 
     if (id != null) {

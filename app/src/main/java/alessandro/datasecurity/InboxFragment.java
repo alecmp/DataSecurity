@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import alessandro.datasecurity.activities.decrypt.DecryptActivity;
+import alessandro.datasecurity.utils.Constants;
 import alessandro.datasecurity.utils.Database;
 import alessandro.datasecurity.utils.DividerItemDecoration;
 import butterknife.ButterKnife;
@@ -133,7 +134,7 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
                         mModel.setSubject(sharedpreferences.getString(Long.toString(mModel.getId())+"S", "Oggetto decriptato"));
                         mModel.setMessage(sharedpreferences.getString(Long.toString(mModel.getId())+"M", "Messaggio decriptato"));
                     }else{
-                        mModel.setSubject("Oggetto criptato");
+                       //mModel.setSubject("Oggetto criptato");
                         mModel.setMessage("Messaggio criptato");
                     }
 
@@ -245,9 +246,9 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
             // Toast.makeText(getContext(), "Read: " + message.getMessage(), Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(getActivity(), DecryptActivity.class);
-            intent.putExtra("message", message.getId());
-            intent.putExtra("subject", message.getSubject());
-            intent.putExtra("path", message.getPath());
+            intent.putExtra(Constants.EXTRA_SECRET_TEXT_RESULT, message.getId());
+            intent.putExtra(Constants.EXTRA_SECRET_SUBJECT_RESULT, message.getSubject());
+            intent.putExtra(Constants.EXTRA_STEGO_IMAGE_PATH, message.getPath());
             intent.putExtra("from", message.getFrom());
             intent.putExtra("id", Long.toString(message.getId()));
             startActivity(intent);

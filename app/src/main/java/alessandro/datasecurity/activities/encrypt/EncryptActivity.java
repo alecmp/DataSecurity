@@ -356,7 +356,7 @@ public class EncryptActivity extends AppCompatActivity implements EncryptView {
     intent.putExtra("receiverId", receiverId);
     //intent.putExtra("secretSubject", getSecretSubject());
     try {
-      intent.putExtra("secretSubject", AESCrypt.encrypt(key, getSecretSubject()));
+      intent.putExtra(Constants.EXTRA_SECRET_SUBJECT_RESULT, AESCrypt.encrypt(key, getSecretSubject()));
     }catch (GeneralSecurityException e){
       //handle error - could be due to incorrect password or tampered encryptedMsg
     }
