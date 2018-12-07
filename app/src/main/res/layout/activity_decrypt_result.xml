@@ -34,7 +34,8 @@
             android:layout_gravity="start" />
 
 
-        <TextView android:layout_width="wrap_content" android:layout_height="match_parent"
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:textSize="@dimen/small_text_dim"
             android:paddingTop="2dp"
             android:textColor="@color/colorPrimaryBlack"
@@ -47,6 +48,7 @@
             app:srcCompat="@drawable/no_img_placeholder"
             android:contentDescription="@string/decrypt_result_title"
             android:id="@+id/ivSecretImage"
+            android:layout_gravity="center"
             android:scaleType="centerCrop"
             android:adjustViewBounds="false"
             android:visibility="gone"/>

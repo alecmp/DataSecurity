@@ -81,7 +81,8 @@ public class DecryptResultActivity extends AppCompatActivity {
             tvSecretMessage.setText(secretMessage);
         } else if (secretImagePath != null) {
             ivSecretImage.setVisibility(View.VISIBLE);
-            setSecretImage(secretImagePath);
+           // setSecretImage(secretImagePath);
+            ivSecretImage.setImageDrawable(getResources().getDrawable(R.drawable.no_img_placeholder));
         }
     }
 
@@ -126,13 +127,20 @@ public class DecryptResultActivity extends AppCompatActivity {
                     public void onResult(Barcode barcode) {
                         //   barcodeResult = barcode;
                         //tvSecretMessage.setText(barcode.rawValue);
-                        tvSecretMessage.setText(decryptAES(barcode.rawValue, secretMessage));
-                        tvSecretSubject.setText(decryptAES(barcode.rawValue, secretSubject));
-                        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(id+"S", tvSecretSubject.getText().toString());
-                        editor.putString(id+"M", tvSecretMessage.getText().toString());
-                        editor.commit();
+                        if (secretImagePath!= null) {
+                            setSecretImage(secretImagePath);
+                        }
+                      if (secretMessage != null) {
+                          tvSecretMessage.setText(decryptAES(barcode.rawValue, secretMessage));
+
+                          tvSecretSubject.setText(decryptAES(barcode.rawValue, secretSubject));
+                          sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+                          SharedPreferences.Editor editor = sharedpreferences.edit();
+                          editor.putString(id + "S", tvSecretSubject.getText().toString());
+                          editor.putString(id + "M", tvSecretMessage.getText().toString());
+                          editor.commit();
+                      }
+                        bScanToDecode.setVisibility(View.GONE);
 
 
 
