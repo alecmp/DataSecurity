@@ -15,7 +15,6 @@ import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -84,6 +83,7 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
             userId = user.getUid();
         }
 
+
         FloatingActionButton fab = view.findViewById(R.id.inbox_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,10 +133,11 @@ public class InboxFragment extends Fragment implements MessagesAdapter.MessageAd
                     if (mModel.isRead()) {
                         //Log.d("sharedpreff",sharedpreferences.getString(Long.toString(mModel.getId()), "Oggetto Criptato") );
                         mModel.setSubject(sharedpreferences.getString(Long.toString(mModel.getId())+"S", "Oggetto decriptato"));
+                        mModel.setDisplayedSubject(mModel.getSubject());
                         mModel.setMessage(sharedpreferences.getString(Long.toString(mModel.getId())+"M", "Messaggio decriptato"));
                     }else{
-                       //mModel.setSubject("Oggetto criptato");
-                        mModel.setMessage("Messaggio criptato");
+                       mModel.setDisplayedSubject("Oggetto criptato");
+                       mModel.setMessage("Messaggio criptato");
                     }
 
                     messages.add(mModel);

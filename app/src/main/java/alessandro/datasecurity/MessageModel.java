@@ -1,7 +1,5 @@
 package alessandro.datasecurity;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import alessandro.datasecurity.utils.Utils;
 
 public class MessageModel {
@@ -16,6 +14,7 @@ public class MessageModel {
     private boolean isRead;
     private int color = -1;
     private String path;
+    private String displayedSubject;
 
     public String getPath() {
         return path;
@@ -76,4 +75,8 @@ public class MessageModel {
     public String getMessage() { return message; }
 
     public void setMessage(String message) { this.message = message; }
+
+    public String getDisplayedSubject() { return displayedSubject; }
+
+    public void setDisplayedSubject(String subject) { this.displayedSubject = subject; }
 }

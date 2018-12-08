@@ -2,11 +2,9 @@ package alessandro.datasecurity;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
@@ -19,8 +17,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +94,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         MessageModel message = messages.get(position);
         holder.from.setText(message.getFrom());
-        holder.subject.setText(message.getSubject());
+        holder.subject.setText(message.getDisplayedSubject());
         holder.message.setText(message.getMessage());
         holder.timestamp.setText(message.getTimeStamp());
 

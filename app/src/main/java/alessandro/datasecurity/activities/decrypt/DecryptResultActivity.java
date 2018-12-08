@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,8 +21,8 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.security.GeneralSecurityException;
 
-import alessandro.datasecurity.utils.Constants;
 import alessandro.datasecurity.R;
+import alessandro.datasecurity.utils.Constants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -130,7 +129,6 @@ public class DecryptResultActivity extends AppCompatActivity {
                         //   barcodeResult = barcode;
                         //tvSecretMessage.setText(barcode.rawValue);
                         if (secretSubject != null) {
-                            setSecretImage(secretSubject);
                             tvSecretSubject.setText(decryptAES(barcode.rawValue, secretSubject));
                             editor.putString(id + "S", tvSecretSubject.getText().toString());
                         }
